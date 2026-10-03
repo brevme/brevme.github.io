@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="AWS Certified AI Practitioner AIF C01 için 10 test, 200 Türkçe soru, ipuçları ve açıklamalı cevaplarla ücretsiz pratik yapın."
+    />
+    <meta property="og:title" content="AIF Lab | AWS AI Practitioner deneme sınavları" />
+    <meta
+      property="og:description"
+      content="AIF C01 sınavına 200 özgün Türkçe soruyla hazırlanın."
+    />
+    <meta property="og:type" content="website" />
+    <meta name="theme-color" content="#131209" />
+    <title>AIF Lab | AWS AI Practitioner deneme sınavları</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%23ffb000'/%3E%3Cpath d='M17 43 29 16h7l12 27h-8l-2-6H27l-2 6h-8Zm12-12h7l-3-9-4 9Z' fill='%23131209'/%3E%3C/svg%3E" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">İçeriğe geç</a>
+
+    <header class="site-header" aria-label="Ana navigasyon">
+      <a class="brand" href="#home" aria-label="AIF Lab ana sayfa">
+        <span class="brand-mark">AI</span>
+        <span>AIF LAB</span>
+      </a>
+      <nav class="nav-actions" aria-label="Sayfa bağlantıları">
+        <a class="nav-link is-current" href="#tests">Testler</a>
+        <button class="button button-small button-ghost" id="continueButton" type="button" hidden>
+          Devam et
+        </button>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section id="landingView" class="view landing-view">
+        <section class="hero" id="home" aria-labelledby="heroTitle">
+          <div class="hero-copy reveal">
+            <div class="eyebrow"><span class="status-dot"></span> 2026 sınav kapsamına göre</div>
+            <h1 id="heroTitle">AWS AI bilgisini<br />soru çözerek keskinleştir.</h1>
+            <p class="hero-subtitle">
+              AIF C01 için hazırlanan 200 özgün Türkçe soruyla çalış. Takıldığında ipucu al,
+              testi bitirdiğinde her cevabın nedenini gör.
+            </p>
+            <div class="hero-actions">
+              <button class="button button-primary" id="startFirstButton" type="button">
+                İlk testi başlat
+                <span aria-hidden="true">→</span>
+              </button>
+              <span class="proof-line">Üyelik gerekmez · İlerleme cihazında saklanır</span>
+            </div>
+          </div>
+
+          <aside class="scope-panel reveal" aria-label="Sınav kapsamı özeti">
+            <div class="panel-kicker">SINAV SİNYALİ</div>
+            <div class="scope-score">
+              <span>700</span>
+              <small>geçme puanı</small>
+            </div>
+            <div class="scope-list">
+              <div class="scope-row">
+                <span>AI ve ML temelleri</span><b>20%</b>
+                <i style="--width: 20%"></i>
+              </div>
+              <div class="scope-row">
+                <span>Üretken AI temelleri</span><b>24%</b>
+                <i style="--width: 24%"></i>
+              </div>
+              <div class="scope-row">
+                <span>Temel model uygulamaları</span><b>28%</b>
+                <i style="--width: 28%"></i>
+              </div>
+              <div class="scope-row">
+                <span>Sorumlu AI</span><b>14%</b>
+                <i style="--width: 14%"></i>
+              </div>
+              <div class="scope-row">
+                <span>Güvenlik ve yönetişim</span><b>14%</b>
+                <i style="--width: 14%"></i>
+              </div>
+            </div>
+            <div class="scope-footer">
+              <span>50 puanlanan soru</span>
+              <span>65 toplam soru</span>
+            </div>
+          </aside>
+        </section>
+
+        <section class="test-section" id="tests" aria-labelledby="testsTitle">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-label">PRATİK KATALOĞU</p>
+              <h2 id="testsTitle">Bugünkü çalışma alanını seç.</h2>
+            </div>
+            <p>Her test 20 tek seçimli sorudan oluşur. Cevaplar yalnızca testi tamamladığında açılır.</p>
+          </div>
+          <div class="test-grid" id="testGrid" aria-live="polite"></div>
+        </section>
+
+        <section class="tagline-section" aria-label="Çalışma yaklaşımı">
+          <p id="taglineText">
+            Sadece doğru şıkkı değil,<br />doğru düşünme biçimini öğren.
+          </p>
+        </section>
+
+        <section class="method-section" aria-labelledby="methodTitle">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-label">ÇALIŞMA DÖNGÜSÜ</p>
+              <h2 id="methodTitle">Üç adımda eksiklerini kapat.</h2>
+            </div>
+          </div>
+          <div class="method-grid">
+            <article class="method-card reveal">
+              <span>01</span>
+              <h3>Bir alan seç</h3>
+              <p>Temellerden güvenliğe kadar odaklanmak istediğin konuyu aç.</p>
+            </article>
+            <article class="method-card reveal">
+              <span>02</span>
+              <h3>İpucuyla düşün</h3>
+              <p>Yanıtı göstermeyen kısa ipuçlarıyla kavramı kendi zihninde çağır.</p>
+            </article>
+            <article class="method-card reveal">
+              <span>03</span>
+              <h3>Sonuçta öğren</h3>
+              <p>Doğru yanıtı, açıklamayı ve hangi alanlarda zorlandığını tek ekranda gör.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="faq-section" aria-labelledby="faqTitle">
+          <div class="section-heading reveal">
+            <div>
+              <p class="section-label">KISA CEVAPLAR</p>
+              <h2 id="faqTitle">Başlamadan önce.</h2>
+            </div>
+          </div>
+          <div class="faq-list reveal">
+            <details>
+              <summary>Sorular gerçek sınav soruları mı?</summary>
+              <p>Hayır. Sorular sınav kapsamına göre özgün olarak hazırlanmıştır ve AWS tarafından yayımlanmış gerçek sınav maddeleri değildir.</p>
+            </details>
+            <details>
+              <summary>Cevapları ne zaman görebilirim?</summary>
+              <p>Testi teslim ettikten sonra tüm doğru cevapları, kendi seçimlerini ve kısa açıklamaları birlikte görürsün.</p>
+            </details>
+            <details>
+              <summary>İpucu puanı etkiler mi?</summary>
+              <p>Hayır. İpucu kullanımı puanı değiştirmez. Amaç, hatırlamayı kolaylaştırmaktır.</p>
+            </details>
+            <details>
+              <summary>İlerlemem kaydediliyor mu?</summary>
+              <p>Evet. Yanıtların ve kaldığın soru bu tarayıcıda otomatik olarak saklanır.</p>
+            </details>
+            <details>
+              <summary>Kaç puan hedeflemeliyim?</summary>
+              <p>Gerçek sınavın ölçekli geçme puanı 700’dür. Bu uygulamada çalışma hedefi olarak yüzde 70 kullanılır.</p>
+            </details>
+            <details>
+              <summary>Mobil cihazda çalışır mı?</summary>
+              <p>Evet. Soru paleti, kontroller ve sonuç incelemesi küçük ekranlara uyum sağlar.</p>
+            </details>
+          </div>
+        </section>
+      </section>
+
+      <section id="quizView" class="view quiz-view" hidden aria-labelledby="quizTitle">
+        <header class="quiz-topbar">
+          <button class="text-button" id="exitQuizButton" type="button">← Testlere dön</button>
+          <div class="quiz-title-wrap">
+            <span id="quizLabel">TEST 01</span>
+            <h1 id="quizTitle">AI ve ML temelleri</h1>
+          </div>
+          <div class="timer" aria-label="Geçen süre"><span class="timer-dot"></span><time id="timer">00:00</time></div>
+        </header>
+        <div class="quiz-progress" aria-hidden="true"><i id="progressBar"></i></div>
+
+        <div class="quiz-shell">
+          <aside class="question-nav" aria-label="Soru paleti">
+            <div class="question-nav-head">
+              <span>SORU PALETİ</span>
+              <b id="answeredCount">0 / 20</b>
+            </div>
+            <div class="question-dots" id="questionDots"></div>
+            <div class="palette-legend">
+              <span><i class="legend-current"></i> Aktif</span>
+              <span><i class="legend-answered"></i> Yanıtlandı</span>
+            </div>
+          </aside>
+
+          <article class="question-card" id="questionCard">
+            <div class="question-meta">
+              <span id="questionDomain">AI VE ML TEMELLERİ</span>
+              <span>TEK SEÇİM</span>
+            </div>
+            <h2 id="questionText"></h2>
+            <form id="optionsForm" class="options-list"></form>
+            <div class="hint-wrap">
+              <button class="hint-button" id="hintButton" type="button" aria-expanded="false">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 21h6M10 17h4M8.5 14.5A7 7 0 1 1 15.5 14.5C14.5 15.2 14 16 14 17h-4c0-1-.5-1.8-1.5-2.5Z"/></svg>
+                İpucu al
+              </button>
+              <p class="hint-text" id="hintText" hidden></p>
+            </div>
+            <footer class="question-actions">
+              <button class="button button-secondary" id="prevButton" type="button">← Önceki</button>
+              <button class="button button-primary" id="nextButton" type="button">Sonraki →</button>
+              <button class="button button-primary" id="submitButton" type="button" hidden>Testi bitir</button>
+            </footer>
+            <p class="inline-error" id="quizError" role="alert" hidden></p>
+          </article>
+        </div>
+      </section>
+
+      <section id="resultsView" class="view results-view" hidden aria-labelledby="resultsTitle">
+        <header class="results-header">
+          <button class="text-button" id="resultsHomeButton" type="button">← Tüm testler</button>
+          <span class="results-kicker">TEST TAMAMLANDI</span>
+          <h1 id="resultsTitle">Sonuçların hazır.</h1>
+          <p id="resultsSummary"></p>
+        </header>
+
+        <div class="score-layout">
+          <div class="score-card" id="scoreCard">
+            <div class="score-ring" id="scoreRing"><span id="scorePercent">0%</span></div>
+            <div>
+              <span class="score-status" id="scoreStatus">HEDEF AŞILDI</span>
+              <h2 id="scoreLine">0 doğru, 0 yanlış</h2>
+              <p>Çalışma hedefi yüzde 70. İpuçları puanı etkilemez.</p>
+            </div>
+          </div>
+          <div class="results-actions">
+            <button class="button button-primary" id="retryButton" type="button">Testi tekrar çöz</button>
+            <button class="button button-secondary" id="nextTestButton" type="button">Sıradaki test</button>
+          </div>
+        </div>
+
+        <section class="review-section" aria-labelledby="reviewTitle">
+          <div class="review-heading">
+            <div>
+              <p class="section-label">CEVAP ANAHTARI</p>
+              <h2 id="reviewTitle">Soruları tek tek incele.</h2>
+            </div>
+            <div class="review-filters" role="group" aria-label="Cevap filtresi">
+              <button class="filter-button is-active" data-filter="all" type="button">Tümü</button>
+              <button class="filter-button" data-filter="wrong" type="button">Yanlışlar</button>
+              <button class="filter-button" data-filter="correct" type="button">Doğrular</button>
+            </div>
+          </div>
+          <div class="review-list" id="reviewList"></div>
+          <div class="empty-state" id="reviewEmpty" hidden>
+            <span>✓</span>
+            <h3>Bu filtrede soru yok.</h3>
+            <p>Diğer cevapları görmek için farklı bir filtre seç.</p>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <footer class="site-footer" id="siteFooter">
+      <div>
+        <span class="brand footer-brand"><span class="brand-mark">AI</span> AIF LAB</span>
+        <p>Bağımsız çalışma aracı. AWS ile bağlantılı veya AWS tarafından onaylı değildir.</p>
+      </div>
+      <nav aria-label="Yasal bağlantılar">
+        <a class="footer-link" href="https://docs.aws.amazon.com/aws-certification/latest/ai-practitioner-01/ai-practitioner-01.html" target="_blank" rel="noreferrer">Resmî sınav kılavuzu</a>
+        <button class="footer-link" data-modal="privacy" type="button">Gizlilik</button>
+        <button class="footer-link" data-modal="terms" type="button">Kullanım koşulları</button>
+      </nav>
+    </footer>
+
+    <dialog id="infoDialog" class="info-dialog">
+      <button class="dialog-close" id="dialogClose" type="button" aria-label="Pencereyi kapat">×</button>
+      <h2 id="dialogTitle"></h2>
+      <div id="dialogContent"></div>
+    </dialog>
+
+    <script src="questions.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
