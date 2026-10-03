@@ -1,7 +1,7 @@
-const q = (text, options, answer, hint, explanation, domain) => ({
+const q = (text, correct, distractors, hint, explanation, domain) => ({
   text,
-  options,
-  answer,
+  options: [correct, ...distractors],
+  answer: 0,
   hint,
   explanation,
   domain,
@@ -10,1682 +10,282 @@ const q = (text, options, answer, hint, explanation, domain) => ({
 const TESTS = [
   {
     id: 1,
-    title: "AI ve ML temelleri",
-    description: "Temel kavramlar, öğrenme türleri, model yaşam döngüsü ve değerlendirme ölçütleri.",
-    domain: "AI VE ML TEMELLERİ",
+    title: "AI and ML fundamentals",
+    description: "Core terminology, learning types, model lifecycle, and evaluation metrics.",
+    domain: "AI AND ML FUNDAMENTALS",
     questions: [
-      q(
-        "Yapay zeka ile makine öğrenmesi arasındaki ilişki en doğru nasıl açıklanır?",
-        ["Makine öğrenmesi yapay zekanın bir alt alanıdır", "Yapay zeka makine öğrenmesinin bir alt alanıdır", "İki kavram tamamen aynıdır", "Makine öğrenmesi yalnızca robotlarda kullanılır"],
-        0,
-        "Daha geniş olan kavramı düşün.",
-        "Yapay zeka, makinelerin insan benzeri görevleri yapmasını hedefleyen geniş alandır. Makine öğrenmesi ise verilerden örüntü öğrenen yapay zeka yaklaşımıdır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Etiketli geçmiş işlemler kullanılarak yeni bir işlemin sahte olup olmadığını tahmin eden model hangi öğrenme türünü kullanır?",
-        ["Denetimli öğrenme", "Denetimsiz öğrenme", "Pekiştirmeli öğrenme", "Kural tabanlı sıkıştırma"],
-        0,
-        "Eğitim örneklerinde beklenen cevap zaten bulunuyor.",
-        "Etiketli örneklerden girdi ile doğru sonuç arasındaki ilişkiyi öğrenmek denetimli öğrenmedir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir perakendeci, müşteri gruplarını önceden tanımlı etiketler olmadan keşfetmek istiyor. En uygun yaklaşım hangisidir?",
-        ["Kümeleme", "Regresyon", "İkili sınıflandırma", "Pekiştirmeli öğrenme"],
-        0,
-        "Amaç benzer kayıtları doğal gruplara ayırmak.",
-        "Kümeleme, etiketlenmemiş verilerde benzer örnekleri gruplandıran denetimsiz öğrenme yöntemidir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir evin metrekare, konum ve oda sayısına göre satış fiyatını tahmin etmek hangi problem türüdür?",
-        ["Regresyon", "Sınıflandırma", "Kümeleme", "Boyut indirgeme"],
-        0,
-        "Çıktı sürekli sayısal bir değerdir.",
-        "Fiyat gibi sürekli sayısal değerlerin tahmini regresyon problemidir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir e postanın spam ya da normal olarak belirlenmesi hangi problem türüdür?",
-        ["Sınıflandırma", "Regresyon", "Kümeleme", "Üretken modelleme"],
-        0,
-        "Model sınırlı sayıdaki kategoriden birini seçer.",
-        "Spam ve normal gibi ayrık etiketlerden birini tahmin etmek sınıflandırmadır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Derin öğrenmenin geleneksel makine öğrenmesinden temel farkı nedir?",
-        ["Çok katmanlı sinir ağlarından yararlanması", "Hiç veri gerektirmemesi", "Yalnızca tablo verisiyle çalışması", "Her zaman açıklanabilir olması"],
-        0,
-        "Adındaki derinlik, ağın yapısına gönderme yapar.",
-        "Derin öğrenme, karmaşık örüntüleri öğrenmek için çok katmanlı yapay sinir ağlarını kullanır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Müşteri yorumlarının olumlu veya olumsuz olduğunu belirlemek öncelikle hangi AI alanına girer?",
-        ["Doğal dil işleme", "Bilgisayarlı görü", "Robotik", "Zaman serisi sıkıştırma"],
-        0,
-        "Girdi insan dilidir.",
-        "Metin anlamlandırma ve duygu analizi doğal dil işlemenin tipik kullanım alanlarıdır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Üretim hattındaki ürün fotoğraflarında çatlak tespit etmek hangi AI alanına örnektir?",
-        ["Bilgisayarlı görü", "Doğal dil işleme", "Konuşma sentezi", "Öneri sistemi"],
-        0,
-        "Model görsel girdiyi inceler.",
-        "Görüntülerden nesne, kusur veya özellik tespit etmek bilgisayarlı görü kapsamındadır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Eğitim ve çıkarım arasındaki fark nedir?",
-        ["Eğitim model parametrelerini öğrenir, çıkarım eğitilmiş modeli yeni girdide kullanır", "Eğitim yalnızca veri toplar, çıkarım veriyi siler", "Çıkarım modeli eğitir, eğitim tahmin üretir", "Aralarında işlevsel fark yoktur"],
-        0,
-        "Önce öğrenme, sonra uygulama sırasını düşün.",
-        "Eğitim sırasında model veriden örüntü ve parametre öğrenir. Çıkarım sırasında bu öğrenilmiş model yeni veri için çıktı üretir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir model eğitim verisinde çok başarılı, yeni veride ise belirgin biçimde başarısızdır. Bu durum nedir?",
-        ["Aşırı öğrenme", "Eksik öğrenme", "Veri şifreleme", "Boyut indirgeme"],
-        0,
-        "Model eğitim örneklerini genellemek yerine ezberlemiş olabilir.",
-        "Aşırı öğrenme, modelin eğitim verisine fazla uyum sağlayıp görülmemiş veride zayıf performans göstermesidir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Hem eğitim hem de test verisinde düşük başarı gösteren aşırı basit bir modelde en olası sorun nedir?",
-        ["Eksik öğrenme", "Aşırı öğrenme", "Veri sızıntısı", "Yüksek doğruluk"],
-        0,
-        "Model verideki temel ilişkiyi bile yakalayamıyor.",
-        "Eksik öğrenme, modelin örüntüleri öğrenemeyecek kadar basit veya yetersiz olmasıdır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Doğrulama veri kümesinin temel amacı nedir?",
-        ["Model ve ayar seçimlerini değerlendirmek", "Son kullanıcı tahminlerini saklamak", "Eğitim verisini şifrelemek", "Nihai tarafsız ölçümü gizlemek"],
-        0,
-        "Bu küme eğitim ile nihai test arasında kullanılır.",
-        "Doğrulama kümesi model seçimi ve ayar kararlarında kullanılır. Test kümesi ise nihai ve tarafsız değerlendirme içindir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir kredi riski modelinde müşterinin geliri nedir, geri ödeme yapıp yapmadığı nedir?",
-        ["Gelir özellik, geri ödeme durumu etikettir", "Gelir etiket, geri ödeme durumu özelliktir", "İkisi de etikettir", "İkisi de model parametresidir"],
-        0,
-        "Özellik girdidir, etiket öğrenilmek istenen sonuçtur.",
-        "Gelir modele verilen bir özelliktir. Geri ödeme durumu tahmin edilen hedef yani etikettir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Gerçekte normal olan bir işlemin model tarafından sahte olarak işaretlenmesi nedir?",
-        ["Yanlış pozitif", "Yanlış negatif", "Doğru pozitif", "Doğru negatif"],
-        0,
-        "Model pozitif dedi ama gerçek durum negatiftir.",
-        "Olmayan bir durumu varmış gibi işaretlemek yanlış pozitiftir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Yanlış alarm maliyetinin çok yüksek olduğu bir sistemde hangi ölçüt özellikle önemlidir?",
-        ["Kesinlik", "Duyarlılık", "Eğitim süresi", "Küme sayısı"],
-        0,
-        "Pozitif tahminlerin ne kadarının gerçekten pozitif olduğuna bak.",
-        "Kesinlik, pozitif tahminlerin ne kadarının doğru olduğunu ölçer ve yanlış pozitiflerin azaltılmasına odaklanır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir hastalığı taşıyan vakaları kaçırmamak en önemli hedefse hangi ölçüt öncelik kazanır?",
-        ["Duyarlılık", "Kesinlik", "Ortalama karesel hata", "Silüet skoru"],
-        0,
-        "Gerçek pozitiflerin ne kadarını yakaladığını ölçen değeri düşün.",
-        "Duyarlılık, gerçek pozitif vakaların ne kadarının doğru tespit edildiğini ölçer ve yanlış negatifleri azaltmaya odaklanır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "F1 skoru hangi iki ölçüt arasında denge kurar?",
-        ["Kesinlik ve duyarlılık", "Doğruluk ve gecikme", "Maliyet ve hız", "Eğitim ve çıkarım"],
-        0,
-        "Özellikle dengesiz sınıflarda birlikte değerlendirilen ikiliyi düşün.",
-        "F1 skoru kesinlik ile duyarlılığın harmonik ortalamasıdır.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Kümeleme sonucunda oluşan gruplar için hangisi doğrudur?",
-        ["Gruplar verideki benzerliklerden keşfedilir", "Her grubun etiketi eğitimden önce verilmelidir", "Çıktı her zaman tek bir sayıdır", "Yalnızca görüntülerde kullanılabilir"],
-        0,
-        "Bu yöntem etiket gerektirmez.",
-        "Kümeleme, önceden verilmiş hedef etiket olmadan benzer veri noktalarını gruplar.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir alışveriş sitesinin geçmiş davranışlara göre ürün önermesi hangi kullanım alanıdır?",
-        ["Kişiselleştirilmiş öneri", "Optik karakter tanıma", "Konuşma sentezi", "Anomali şifreleme"],
-        0,
-        "Amaç her kullanıcıya ilgisine uygun içerik göstermektir.",
-        "Öneri sistemleri kullanıcı davranışlarından ilgi örüntülerini öğrenerek kişiselleştirilmiş içerik sunar.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Sensör ölçümlerindeki alışılmadık davranışları belirlemek için en uygun AI kullanım alanı hangisidir?",
-        ["Anomali tespiti", "Metin özetleme", "Konuşma sentezi", "Makine çevirisi"],
-        0,
-        "Aranan şey normal örüntüden sapmadır.",
-        "Anomali tespiti, normal davranıştan belirgin biçimde ayrılan gözlemleri bulmak için kullanılır.",
-        "AI ve ML temelleri"
-      ),
+      q("Which statement best describes the relationship between artificial intelligence and machine learning?", "Machine learning is a subset of artificial intelligence", ["Artificial intelligence is a subset of machine learning", "The terms always mean exactly the same thing", "Machine learning is used only in robotics"], "Identify which term covers the broader field.", "Artificial intelligence is the broad field of creating systems that perform intelligent tasks. Machine learning is an AI approach that learns patterns from data.", "AI and ML fundamentals"),
+      q("A model learns from historical transactions labeled as fraudulent or legitimate. Which learning type is being used?", "Supervised learning", ["Unsupervised learning", "Reinforcement learning", "Rule based compression"], "The expected outcome is included with each training example.", "Supervised learning uses labeled examples to learn a mapping from inputs to known target outputs.", "AI and ML fundamentals"),
+      q("A retailer wants to discover natural customer segments without predefined labels. Which approach is most appropriate?", "Clustering", ["Regression", "Binary classification", "Reinforcement learning"], "The goal is to group similar records without known categories.", "Clustering is an unsupervised learning technique that groups similar data points without target labels.", "AI and ML fundamentals"),
+      q("Predicting a house sale price from its size, location, and number of rooms is what type of problem?", "Regression", ["Classification", "Clustering", "Dimensionality reduction"], "The output is a continuous numeric value.", "Regression predicts continuous numeric values such as prices, demand, or temperature.", "AI and ML fundamentals"),
+      q("Classifying an email as spam or legitimate is what type of problem?", "Classification", ["Regression", "Clustering", "Generative modeling"], "The model chooses one of a limited set of categories.", "Classification predicts a discrete class such as spam or legitimate.", "AI and ML fundamentals"),
+      q("What primarily distinguishes deep learning from many traditional machine learning techniques?", "It uses neural networks with multiple layers", ["It requires no training data", "It works only with tabular data", "It is always fully explainable"], "The word deep refers to the model architecture.", "Deep learning uses multilayer neural networks to learn complex representations from data.", "AI and ML fundamentals"),
+      q("Determining whether a customer review is positive or negative belongs primarily to which AI field?", "Natural language processing", ["Computer vision", "Robotics", "Time series compression"], "The input is human language.", "Sentiment analysis interprets language and is a common natural language processing task.", "AI and ML fundamentals"),
+      q("Detecting cracks in product photographs on a manufacturing line is an example of which AI field?", "Computer vision", ["Natural language processing", "Speech synthesis", "Recommendation systems"], "The model examines visual input.", "Computer vision extracts information such as objects, defects, or features from images and video.", "AI and ML fundamentals"),
+      q("What is the difference between training and inference?", "Training learns model parameters; inference uses the trained model on new input", ["Training only collects data; inference deletes it", "Inference trains the model; training creates predictions", "There is no functional difference"], "Think about learning first and applying knowledge second.", "A model learns patterns and parameters during training, then produces outputs for new data during inference.", "AI and ML fundamentals"),
+      q("A model performs extremely well on training data but poorly on new data. What is the most likely issue?", "Overfitting", ["Underfitting", "Data encryption", "Dimensionality reduction"], "The model may have memorized its training examples.", "Overfitting occurs when a model fits training data too closely and fails to generalize to unseen data.", "AI and ML fundamentals"),
+      q("A very simple model performs poorly on both training and test data. What is the most likely issue?", "Underfitting", ["Overfitting", "Data leakage", "High accuracy"], "The model cannot capture even the main pattern.", "Underfitting occurs when a model is too simple or insufficiently trained to represent the underlying relationships.", "AI and ML fundamentals"),
+      q("What is the primary purpose of a validation dataset?", "To compare model choices and tune settings", ["To store production predictions", "To encrypt the training data", "To replace the final test set"], "It is used between training and final testing.", "Validation data supports model and hyperparameter selection, while test data provides the final unbiased evaluation.", "AI and ML fundamentals"),
+      q("In a credit risk model, customer income is provided as input and repayment status is predicted. What are these values?", "Income is a feature; repayment status is the label", ["Income is the label; repayment status is a feature", "Both are labels", "Both are model parameters"], "A feature is an input and a label is the target.", "Income is an input feature. Repayment status is the target label the model learns to predict.", "AI and ML fundamentals"),
+      q("A legitimate transaction is incorrectly flagged as fraudulent. How is this result classified?", "False positive", ["False negative", "True positive", "True negative"], "The model predicted positive while the actual class was negative.", "A false positive occurs when the model reports a condition that is not actually present.", "AI and ML fundamentals"),
+      q("Which metric deserves special attention when false alarms are very costly?", "Precision", ["Recall", "Training time", "Number of clusters"], "Ask how many positive predictions are actually correct.", "Precision measures the proportion of positive predictions that are correct and is sensitive to false positives.", "AI and ML fundamentals"),
+      q("Which metric should be prioritized when missing a person who has a serious disease is especially costly?", "Recall", ["Precision", "Mean squared error", "Silhouette score"], "Focus on capturing as many actual positive cases as possible.", "Recall measures the proportion of actual positive cases detected and is sensitive to false negatives.", "AI and ML fundamentals"),
+      q("The F1 score balances which two metrics?", "Precision and recall", ["Accuracy and latency", "Cost and speed", "Training and inference"], "It is often useful when classes are imbalanced.", "F1 is the harmonic mean of precision and recall.", "AI and ML fundamentals"),
+      q("Which statement about clusters produced by a clustering algorithm is correct?", "Groups are discovered from similarities in the data", ["Every group must be labeled before training", "The output is always one number", "Clustering can only be used with images"], "This technique does not require target labels.", "Clustering discovers groups of similar observations in unlabeled data.", "AI and ML fundamentals"),
+      q("An online store suggests products based on a customer's past behavior. What use case does this represent?", "Personalized recommendations", ["Optical character recognition", "Speech synthesis", "Anomaly encryption"], "The goal is to tailor content to an individual.", "Recommendation systems learn preference patterns from behavior and use them to rank relevant items.", "AI and ML fundamentals"),
+      q("Which AI use case is best suited to finding unusual patterns in equipment sensor readings?", "Anomaly detection", ["Text summarization", "Speech synthesis", "Machine translation"], "Look for observations that depart from normal behavior.", "Anomaly detection identifies observations that differ significantly from an established normal pattern.", "AI and ML fundamentals"),
     ],
   },
   {
-    id: 9,
-    title: "Senaryo laboratuvarı",
-    description: "İş gereksinimini doğru AI yaklaşımı ve AWS servisiyle eşleştiren uygulamalı sorular.",
-    domain: "UYGULAMA SENARYOLARI",
+    id: 2,
+    title: "Generative AI fundamentals",
+    description: "Foundation models, tokens, context, embeddings, generation controls, and limitations.",
+    domain: "GENERATIVE AI FUNDAMENTALS",
     questions: [
-      q(
-        "Bir sigorta şirketi, hasar formlarındaki alanları ve tabloları çıkarıp inceleme sistemine aktarmak istiyor. En uygun servis hangisidir?",
-        ["Amazon Textract", "Amazon Polly", "Amazon Personalize", "Amazon Translate"],
-        0,
-        "Girdi yapılandırılmış ve yarı yapılandırılmış belgelerdir.",
-        "Textract, belgelerden basılı ve el yazısı metin yanında form anahtar değerlerini ve tabloları çıkarabilir.",
-        "Servis seçimi"
-      ),
-      q(
-        "Küresel bir destek ekibi, müşterilerin farklı dillerdeki mesajlarını temsilcinin diline çevirmek istiyor. En doğrudan çözüm hangisidir?",
-        ["Amazon Translate", "Amazon Rekognition", "Amazon Macie", "Amazon Redshift"],
-        0,
-        "Metni bir dilden diğerine çevirmek gerekiyor.",
-        "Amazon Translate, çok dilli metinleri destek ekibinin tercih ettiği dile otomatik çevirmek için tasarlanmıştır.",
-        "Servis seçimi"
-      ),
-      q(
-        "Bir banka, kredi kararlarını etkileyen modelin her demografik grupta benzer çalışıp çalışmadığını görmek istiyor. Ne yapmalıdır?",
-        ["Performans ve hata oranlarını gruplara göre ayrı ölçmelidir", "Yalnızca genel doğruluğa bakmalıdır", "Modelin adını değiştirmelidir", "Daha uzun istem yazmalıdır"],
-        0,
-        "Toplam ortalama bazı gruplardaki sorunu gizleyebilir.",
-        "Ayrıştırılmış değerlendirme, farklı gruplardaki doğruluk, yanlış pozitif ve yanlış negatif farklarını görünür kılar.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Bir şirket çalışan el kitabını yanıtlayan asistan istiyor. Belgeler her ay değişiyor ve yanıtların kaynak göstermesi gerekiyor. En uygun yaklaşım hangisidir?",
-        ["Bedrock Knowledge Bases ile RAG", "Her ay temel modeli sıfırdan eğitmek", "Yalnızca yüksek temperature kullanmak", "Amazon Polly ile ses üretmek"],
-        0,
-        "Güncel kurumsal bilgi ve kaynak atfı birlikte isteniyor.",
-        "RAG, güncel belge parçalarını getirip yanıtı bunlarla temellendirir ve kaynak gösterimini destekler.",
-        "RAG"
-      ),
-      q(
-        "Bir çağrı merkezi, görüşmeleri yazıya çevirdikten sonra müşteri duygusunu çıkarmak istiyor. Doğru servis sırası hangisidir?",
-        ["Amazon Transcribe, ardından Amazon Comprehend", "Amazon Polly, ardından Amazon Rekognition", "Amazon Textract, ardından Amazon Translate", "Amazon Personalize, ardından AWS Artifact"],
-        0,
-        "Önce ses metne dönüşür, sonra metin analiz edilir.",
-        "Transcribe konuşmayı metne dönüştürür. Comprehend bu metin üzerinde duygu analizi yapar.",
-        "Servis seçimi"
-      ),
-      q(
-        "Bir e ticaret sitesi, her müşteriye geçmiş tıklama ve satın alma davranışına göre ürün göstermek istiyor. En uygun servis hangisidir?",
-        ["Amazon Personalize", "Amazon Textract", "Amazon Polly", "AWS CloudTrail"],
-        0,
-        "Kişiye özel sıralama ve öneri gerekir.",
-        "Amazon Personalize, kullanıcı etkileşimlerinden kişiselleştirilmiş ürün veya içerik önerileri üretir.",
-        "Servis seçimi"
-      ),
-      q(
-        "Bir hukuk asistanı yalnızca onaylanmış sözleşmelere dayanarak yanıt vermeli ve cevap bulunamadığında bunu söylemelidir. En iyi çözüm hangisidir?",
-        ["RAG, kaynak filtresi ve güvenli geri çekilme talimatı", "Sınırsız yaratıcı üretim", "Yalnızca model boyutunu artırmak", "Kaynak belgeleri istemden kaldırmak"],
-        0,
-        "Yanıtı güvenilir kaynaklarla sınırlandır ve bilinmeyeni kabul et.",
-        "Onaylı kaynaklarda arama, meta veri filtresi ve kaynakta yanıt yoksa geri çekilme talimatı temelsiz iddia riskini azaltır.",
-        "RAG"
-      ),
-      q(
-        "Pazarlama ekibi çok sayıda yaratıcı slogan varyasyonu istiyor. Hangi çıkarım ayarı ölçülü biçimde artırılabilir?",
-        ["Temperature", "IAM izin sayısı", "S3 saklama süresi", "KMS anahtar boyutu"],
-        0,
-        "Token seçimindeki çeşitliliği kontrol eden ayardır.",
-        "Daha yüksek temperature yaratıcı görevlerde çeşitliliği artırabilir. Çıktılar marka ve güvenlik kurallarıyla yine değerlendirilmelidir.",
-        "Çıkarım ayarları"
-      ),
-      q(
-        "Bir finans uygulaması para iadesi yapabilen bir ajan kullanıyor. En önemli ek kontrol hangisidir?",
-        ["İade öncesi insan onayı ve tutar sınırı", "Ajana hesap genelinde yönetici rolü", "Sonsuz yeniden deneme", "Denetim günlüklerini kapatma"],
-        0,
-        "Eylem maddi etki yaratıyor ve geri alınması zor olabilir.",
-        "İnsan onayı, işlem sınırı ve en az yetki yüksek etkili ajan eylemlerinin riskini azaltır.",
-        "Ajan güvenliği"
-      ),
-      q(
-        "Bir hastane, notları özetlemeden önce kişisel bilgileri çıkarmak istiyor. İlk yapılması gereken nedir?",
-        ["Gereksiz kişisel bilgileri maskelemek veya redakte etmek", "Veriyi herkese açık S3 bucket'a koymak", "Tüm notları süresiz saklamak", "Modele yönetici izni vermek"],
-        0,
-        "Model çağrısına yalnızca gerekli veriyi gönder.",
-        "Veri minimizasyonu ve redaksiyon, hassas sağlık verisinin gereksiz işlenmesini ve ifşa riskini azaltır.",
-        "Veri koruma"
-      ),
-      q(
-        "Bir fabrika, kamera görüntülerinden hatalı ürünleri otomatik işaretlemek istiyor. Başlangıç için en uygun servis hangisidir?",
-        ["Amazon Rekognition", "Amazon Translate", "Amazon Comprehend", "AWS Artifact"],
-        0,
-        "Girdi görüntü, görev görsel analizdir.",
-        "Rekognition görüntü analizi yetenekleri sunar. Çok özel kusurlar için özel model gereksinimi ayrıca değerlendirilmelidir.",
-        "Servis seçimi"
-      ),
-      q(
-        "Bir ekip, işine en uygun temel modeli seçmek istiyor. İlk karşılaştırma nasıl yapılmalıdır?",
-        ["Temsilî görevlerde kalite, gecikme, maliyet ve güvenliği ölçerek", "Yalnızca parametre sayısına bakarak", "En yeni modeli doğrudan seçerek", "Model adını rastgele seçerek"],
-        0,
-        "Gerçek iş gereksinimleri birden fazla ölçüt içerir.",
-        "Temsilî veriyle çok boyutlu değerlendirme, en büyük veya popüler model yerine ihtiyaca en uygun modeli seçmeyi sağlar.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Bir özetleme uygulaması beklenenden pahalı çalışıyor. Kaliteyi koruyarak ilk hangi optimizasyon denenmelidir?",
-        ["Gereksiz istem bağlamını ve çıktı uzunluğunu azaltmak", "Her isteğe aynı belgeyi birkaç kez eklemek", "Daha fazla yönetici rolü oluşturmak", "Tüm yanıtları maksimum uzunlukta üretmek"],
-        0,
-        "Ücretlendirmenin işlenen token miktarıyla ilişkisini düşün.",
-        "İlgisiz bağlamı kaldırmak ve yeterli çıktı sınırı koymak, işlenen token miktarını ve maliyeti azaltabilir.",
-        "Maliyet"
-      ),
-      q(
-        "Bir müşteri botu sık sık şirket politikası uyduruyor. En etkili iyileştirme hangisidir?",
-        ["Onaylı politika belgeleriyle RAG ve kaynak doğrulama kullanmak", "Temperature değerini en yükseğe çıkarmak", "Tüm güvenlik kontrollerini kaldırmak", "Yanıtları daha uzun istemek"],
-        0,
-        "Yanıtı doğrulanmış kurumsal bilgiye bağla.",
-        "RAG ve kaynak doğrulama, modelin onaylı politikalara dayanmasını sağlar ve halüsinasyon riskini azaltır.",
-        "RAG"
-      ),
-      q(
-        "Bir veri bilim ekibi özel tahmin modeli geliştirip uçtan uca yaşam döngüsünü yönetmek istiyor. Hangi servis uygundur?",
-        ["Amazon SageMaker AI", "Amazon Polly", "Amazon Translate", "AWS Artifact"],
-        0,
-        "Hazır amaçlı bir API değil, özel ML platformu gerekiyor.",
-        "SageMaker AI özel modellerin veri hazırlama, eğitim, değerlendirme ve dağıtım yaşam döngüsünü destekler.",
-        "Servis seçimi"
-      ),
-      q(
-        "Bir denetçi, AWS hizmetlerine ait bağımsız uyumluluk raporlarını istiyor. Hangi servis kullanılmalıdır?",
-        ["AWS Artifact", "Amazon Lex", "Amazon Personalize", "AWS Lambda"],
-        0,
-        "AWS uyumluluk belgeleri portalını düşün.",
-        "AWS Artifact, denetim ve uyumluluk için AWS raporlarına ve belirli anlaşmalara erişim sağlar.",
-        "Uyumluluk"
-      ),
-      q(
-        "Bir asistanın yanıt kalitesi dağıtımdan birkaç ay sonra düştü. En olası açıklama ve eylem hangisidir?",
-        ["Veri veya kullanım kayması olabilir; üretim örnekleriyle yeniden değerlendirilmelidir", "Model mutlaka bozulmuştur; tüm günlükler silinmelidir", "Kullanıcılar azaltılmalıdır", "IAM politikaları herkese açılmalıdır"],
-        0,
-        "Gerçek dünya verisinin zamanla değişebildiğini düşün.",
-        "Veri ve kullanıcı beklentileri zamanla kayabilir. İzleme, hata analizi ve güncellenmiş değerlendirme veri kümesi sorunu ortaya çıkarır.",
-        "Yaşam döngüsü"
-      ),
-      q(
-        "Bir müşteri hizmetleri botunun marka tonunu tutarlı kullanması gerekiyor. En düşük maliyetli ilk adım hangisidir?",
-        ["Açık sistem istemi ve birkaç iyi yanıt örneği kullanmak", "Hemen temel modeli sıfırdan eğitmek", "Bütün belgeleri silmek", "Her kullanıcıya farklı rastgele talimat vermek"],
-        0,
-        "Önce istem mühendisliğiyle davranışı yönlendirmeyi dene.",
-        "Rol, ton kuralları ve few shot örnekleri çoğu durumda model eğitmeden tutarlı üslup sağlayan iyi bir ilk adımdır.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Bir ajan yalnızca sipariş durumunu okumalı, değiştirmemelidir. IAM politikası nasıl olmalıdır?",
-        ["Yalnızca gerekli okuma eylemlerine izin vermelidir", "Tüm yazma ve silme eylemlerine izin vermelidir", "Yönetici erişimi vermelidir", "Kimlik doğrulama istememelidir"],
-        0,
-        "İzinleri işlevin gerektirdiği eylemlerle sınırla.",
-        "En az yetki kapsamında ajan yalnızca sipariş durumunu okumak için gereken kaynak ve API eylemlerine erişmelidir.",
-        "Güvenlik"
-      ),
-      q(
-        "Bir ürün ekibi AI özelliğinin başarılı olup olmadığını anlamak istiyor. En iyi ölçüm planı hangisidir?",
-        ["İş sonucu, kalite, gecikme, maliyet ve risk ölçütlerini birlikte izlemek", "Sadece modelin adıyla karar vermek", "Yalnızca üretilen token sayısını artırmak", "Kullanıcı geri bildirimini görmezden gelmek"],
-        0,
-        "Teknik kalite ile iş değerini birlikte düşün.",
-        "Başarı, görev tamamlama veya zaman tasarrufu gibi iş hedefleriyle birlikte kalite, kullanıcı deneyimi, maliyet ve güvenlik göstergeleriyle ölçülmelidir.",
-        "İş değeri"
-      ),
-    ],
-  },
-  {
-    id: 10,
-    title: "Tam kapsamlı prova",
-    description: "Beş sınav alanından dengeli, karışık ve senaryo ağırlıklı son tekrar.",
-    domain: "KARMA PROVA",
-    questions: [
-      q(
-        "Etiketsiz destek kayıtlarını konu benzerliğine göre gruplamak için hangi yöntem kullanılmalıdır?",
-        ["Kümeleme", "Regresyon", "Denetimli sınıflandırma", "Konuşma sentezi"],
-        0,
-        "Önceden tanımlı konu etiketleri yoktur.",
-        "Kümeleme, etiketsiz örnekleri benzerliklerine göre doğal gruplara ayıran denetimsiz öğrenme yöntemidir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bir sahtekarlık modelinde kaçırılan sahte işlem sayısını azaltmak için öncelikle hangi ölçüt iyileştirilmelidir?",
-        ["Duyarlılık", "Kesinlik", "Eğitim süresi", "Küme sayısı"],
-        0,
-        "Yanlış negatifleri azaltmak hedefleniyor.",
-        "Duyarlılık, gerçek pozitiflerin ne kadarının bulunduğunu ölçer. Yüksek duyarlılık daha az sahte işlemin kaçırılması demektir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Büyük dil modelindeki bağlam penceresi dolduğunda en olası sonuç nedir?",
-        ["Girdinin bir bölümü işlenemez veya kırpılmak zorunda kalır", "Model otomatik olarak sınırsız belleğe geçer", "IAM rolleri silinir", "Model kalıcı olarak yeniden eğitilir"],
-        0,
-        "Model tek istekte sınırlı sayıda token işleyebilir.",
-        "Bağlam penceresi toplam token kapasitesini sınırlar. Uzun içerik parçalanmalı, özetlenmeli veya seçilerek eklenmelidir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Bir modelin kuruma ait güncel belgelere dayanmasını, fakat ağırlıklarının değişmemesini isteyen ekip ne kullanmalıdır?",
-        ["RAG", "Sıfırdan ön eğitim", "Yalnızca temperature artırma", "Kümeleme"],
-        0,
-        "Bilgiyi istek anında dış kaynaktan getir.",
-        "RAG, model ağırlıklarını değiştirmeden ilgili kurumsal içeriği istem bağlamına ekler.",
-        "Temel model uygulamaları"
-      ),
-      q(
-        "Amazon Bedrock Guardrails içinde reddedilen konu tanımlamanın amacı nedir?",
-        ["Uygulamanın konuşmaması gereken alanları sınırlamak", "Modelin bağlam penceresini büyütmek", "Vektörleri şifrelemek", "S3 maliyetini hesaplamak"],
-        0,
-        "İş politikası gereği engellenen sohbet alanlarını düşün.",
-        "Reddedilen konular, uygulamanın belirli iş veya güvenlik alanlarında yanıt vermemesini sağlayan yapılandırılabilir korumadır.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bir mobil uygulama metni doğal sese çevirecek. Hangi AWS servisi kullanılmalıdır?",
-        ["Amazon Polly", "Amazon Transcribe", "Amazon Textract", "Amazon Comprehend"],
-        0,
-        "Metinden sese dönüşümü düşün.",
-        "Amazon Polly, metni çeşitli dil ve seslerde konuşmaya dönüştürür.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Bir temel model karşılaştırmasında neden gerçek kullanım örnekleri kullanılmalıdır?",
-        ["Genel kıyas sonuçları kuruma özgü kaliteyi yansıtmayabilir", "Model adını değiştirmek için", "IAM rolü oluşturmak için", "Depolama alanını doldurmak için"],
-        0,
-        "Görev ve veri dağılımı kuruma özgüdür.",
-        "Temsilî örnekler, modelin gerçek görevdeki doğruluk, üslup, güvenlik ve performansını güvenilir biçimde ölçmeyi sağlar.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Bir AI sistemi genel olarak iyi, fakat yaşlı kullanıcı grubunda zayıf çalışıyor. Bu hangi soruna işaret eder?",
-        ["Grup bazlı adalet ve temsil sorunu", "Daha güçlü şifreleme gereksinimi", "DNS sorunu", "S3 depolama sınıfı sorunu"],
-        0,
-        "Toplam başarı belirli gruptaki farkı gizliyor.",
-        "Belirli bir grupta düşük performans, eğitim verisi temsili ve adalet açısından araştırılması gereken bir eşitsizliktir.",
-        "Sorumlu AI"
-      ),
-      q(
-        "AWS API çağrıları için denetim izi oluşturmak isteyen ekip hangi servisi etkinleştirmelidir?",
-        ["AWS CloudTrail", "Amazon Translate", "Amazon Personalize", "Amazon Polly"],
-        0,
-        "Hesap etkinliği ve API geçmişini düşün.",
-        "CloudTrail, AWS hesabındaki API etkinliğini kaydederek güvenlik incelemesi ve uyumluluk için denetim izi sağlar.",
-        "Güvenlik"
-      ),
-      q(
-        "Bir istemde birkaç doğru sınıflandırma örneği verip yeni kaydı sınıflandırmak hangi tekniktir?",
-        ["Few shot istem", "Zero shot istem", "Model damıtma", "Denetimsiz kümeleme"],
-        0,
-        "Model yeni görev örüntüsünü örneklerden görür.",
-        "Few shot istem, görev talimatıyla birlikte az sayıda örnek sunarak modelin beklenen davranışı taklit etmesini sağlar.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Bir üretken AI uygulamasında kullanıcı girdisi sistem talimatlarını yok saymasını istiyor. Bu hangi tehdittir?",
-        ["İstem enjeksiyonu", "Aşırı öğrenme", "Kümeleme hatası", "Vektör normalleştirme"],
-        0,
-        "Güvenilmeyen içerik üst düzey komutları aşmaya çalışır.",
-        "İstem enjeksiyonu, saldırgan metnin model talimatlarını değiştirmeye veya gizli bilgiyi açığa çıkarmaya çalışmasıdır.",
-        "AI güvenliği"
-      ),
-      q(
-        "Bir asistanın yalnızca çalışanların erişebildiği belgeleri getirmesi nasıl sağlanır?",
-        ["Getirme katmanında kullanıcı yetkilerine göre erişim filtresi uygulayarak", "Tüm belgeleri tek herkese açık indekse koyarak", "Temperature değerini düşürerek", "Model çıktısını uzatarak"],
-        0,
-        "Belge erişimi üretimden önce kontrol edilmelidir.",
-        "Kullanıcı kimliği ve belge düzeyi izinler getirme aşamasında uygulanmalı, modele yetkisiz içerik gönderilmemelidir.",
-        "Güvenlik"
-      ),
-      q(
-        "Bir model çok yüksek eğitim başarısına rağmen yeni örneklerde zayıfsa ne yapılabilir?",
-        ["Daha çeşitli veri, düzenlileştirme veya daha basit model değerlendirmek", "Eğitim verisini daha çok ezberletmek", "Test kümesini eğitim içine katmak", "Tüm değerlendirmeyi kaldırmak"],
-        0,
-        "Sorun aşırı öğrenmedir.",
-        "Daha temsilî veri, düzenlileştirme ve uygun model karmaşıklığı aşırı öğrenmeyi azaltıp genellemeyi iyileştirebilir.",
-        "AI ve ML temelleri"
-      ),
-      q(
-        "Bedrock ajanının stok kontrol edip sipariş oluşturması için hangi iki bileşen gerekir?",
-        ["Bilgi erişimi ve tanımlı eylem grubu", "Yalnızca daha yüksek temperature", "S3 Glacier ve AWS Artifact", "Amazon Polly ve Amazon Translate"],
-        0,
-        "Ajan hem bilgiye bakacak hem bir API eylemi yapacak.",
-        "Ajan stok bilgisini bir kaynak veya araçtan alır ve sipariş API'sini tanımlı, yetkili eylem grubu üzerinden çağırır.",
-        "Ajanlar"
-      ),
-      q(
-        "Bir kuruluş, model çıktılarında kişisel bilgi görünmesini sınırlamak istiyor. Bedrock içinde hangi özellik yardımcı olur?",
-        ["Guardrails hassas bilgi filtreleri", "Provisioned Throughput", "S3 Transfer Acceleration", "Amazon Route 53"],
-        0,
-        "Çıktıda hassas örüntüleri maskeleyen veya engelleyen özelliği düşün.",
-        "Bedrock Guardrails, yapılandırılan kişisel bilgi türlerini tespit edip maskeleme veya engelleme politikaları uygulayabilir.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bir modelin özetleri referans metinle kelime örtüşmesi üzerinden değerlendirilecek. Hangi ölçüt uygundur?",
-        ["ROUGE", "Duyarlılık", "Silüet skoru", "CPU kullanımı"],
-        0,
-        "Özetleme için yaygın n gram ölçütünü düşün.",
-        "ROUGE, üretilen özet ile referans özet arasındaki kelime veya n gram örtüşmesini ölçer.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Amazon Macie hangi kaynağı hassas veri için inceler?",
-        ["Amazon S3", "Amazon Polly sesleri", "IAM parolaları", "Amazon Lex niyetleri"],
-        0,
-        "AWS nesne deposunu düşün.",
-        "Macie, S3 bucket ve nesnelerini analiz ederek kişisel veya hassas veri bulmaya yardım eder.",
-        "Güvenlik"
-      ),
-      q(
-        "Bir AI projesi için en doğru başlangıç noktası hangisidir?",
-        ["Açık iş problemi, başarı ölçütü ve risk sınırı tanımlamak", "Önce en büyük modeli satın almak", "Ölçüm planı olmadan üretime çıkmak", "Teknolojiye göre sorun icat etmek"],
-        0,
-        "Çözümden önce sonucu tanımla.",
-        "İş hedefi, ölçülebilir başarı ölçütleri, veri uygunluğu ve risk değerlendirmesi teknoloji seçiminden önce netleşmelidir.",
-        "İş değeri"
-      ),
-      q(
-        "Yüksek riskli AI kararlarında açıklanabilirlik neden önemlidir?",
-        ["Paydaşların karar gerekçesini inceleyip sorgulayabilmesi için", "Modelin daha çok token üretmesi için", "Depolama maliyetini artırmak için", "İnsan gözetimini tamamen kaldırmak için"],
-        0,
-        "Karardan etkilenen kişilerin neden sorusunu düşün.",
-        "Açıklanabilirlik, kararın dayanağını değerlendirmeyi, hataları bulmayı ve hesap verebilirliği destekler.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Değişken ve düşük trafikli Bedrock iş yükü için hangi fiyatlama yaklaşımı iyi bir başlangıçtır?",
-        ["İstek üzerine çıkarım", "Sürekli en yüksek ayrılmış kapasite", "Her çağrıda yeni model eğitimi", "Fiziksel sunucu satın alma"],
-        0,
-        "Kullandığın kadar öde esnekliğini düşün.",
-        "İstek üzerine çıkarım, kapasite taahhüdü olmadan değişken trafik için esnek kullanım sunar.",
-        "Maliyet"
-      ),
-    ],
-  },
-  {
-    id: 7,
-    title: "Sorumlu AI",
-    description: "Adalet, şeffaflık, açıklanabilirlik, güvenlik, mahremiyet ve insan gözetimi.",
-    domain: "SORUMLU AI",
-    questions: [
-      q(
-        "Sorumlu AI bağlamında adalet neyi amaçlar?",
-        ["Farklı gruplar için haksız sonuçları belirlemeyi ve azaltmayı", "Her kullanıcıya aynı metni göstermeyi", "Modeli yalnızca en hızlı sunucuda çalıştırmayı", "Tüm kararları gizli tutmayı"],
-        0,
-        "Sonuçların gruplar üzerindeki etkisini düşün.",
-        "Adalet, AI sistemlerinin kişiler veya gruplar üzerinde haksız ve ayrımcı sonuçlar üretme riskini ölçmeyi ve azaltmayı hedefler.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Eğitim verisinde belirli bir grubun çok az temsil edilmesi hangi riski artırır?",
-        ["O grup için düşük performans ve önyargı", "Her grupta otomatik eşit başarı", "Daha düşük depolama gecikmesi", "Daha güçlü şifreleme"],
-        0,
-        "Model gördüğü örneklerden öğrenir.",
-        "Yetersiz temsil, modelin o gruba ilişkin örüntüleri iyi öğrenememesine ve performans farklarına yol açabilir.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Şeffaflık ilkesi için hangisi iyi bir uygulamadır?",
-        ["Kullanıcıya AI ile etkileştiğini ve sistemin sınırlarını bildirmek", "Model kullanımını tamamen gizlemek", "Değerlendirme sonuçlarını silmek", "Tüm açıklamaları yalnızca geliştiriciye göstermek"],
-        0,
-        "Kullanıcının sistemin doğasını bilmesini sağla.",
-        "Şeffaflık, AI kullanımının, veri uygulamalarının, yeteneklerin ve sınırlamaların ilgili taraflara açıkça anlatılmasını içerir.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Açıklanabilirlik ne sağlar?",
-        ["Model çıktısına etki eden nedenleri anlaşılır kılmayı", "Her modelin her zaman doğru olmasını", "Veri depolama maliyetini sıfırlamayı", "İnsan gözetimini kaldırmayı"],
-        0,
-        "Bir kararın neden verildiği sorusunu düşün.",
-        "Açıklanabilirlik, kullanıcıların ve paydaşların model çıktısına hangi etkenlerin katkıda bulunduğunu anlamasına yardım eder.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Yüksek etkili kredi kararında neden insan gözetimi gerekir?",
-        ["Hatalı veya tartışmalı sonuçların incelenip düzeltilebilmesi için", "Modelin daha fazla token üretmesi için", "S3 maliyetini artırmak için", "Tüm başvuruları otomatik reddetmek için"],
-        0,
-        "Kararın birey üzerindeki etkisi ve itiraz hakkını düşün.",
-        "İnsan gözetimi, kritik kararların incelenmesini, istisnaların değerlendirilmesini ve etkilenen kişilere başvuru yolu sunulmasını sağlar.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Robustness yani sağlamlık neyi ifade eder?",
-        ["Sistemin değişen veya beklenmedik girdilerde güvenilir davranmasını", "Yalnızca en uzun yanıtı üretmesini", "Tüm kullanıcıların aynı parolayı kullanmasını", "Her veriyi sonsuza dek saklamayı"],
-        0,
-        "Gerçek dünya koşullarındaki dayanıklılığı düşün.",
-        "Sağlamlık, sistemin gürültülü, değişen, uç veya kötü niyetli girdiler altında kabul edilebilir ve güvenli biçimde çalışmasıdır.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Bir işe alım modelinin adaletini değerlendirmenin en iyi yolu hangisidir?",
-        ["Performansı ilgili demografik gruplara göre ayrı incelemek", "Yalnızca toplam doğruluğa bakmak", "Eğitim süresini ölçmek", "Model adını değiştirmek"],
-        0,
-        "Genel ortalama grup farklarını gizleyebilir.",
-        "Ayrıştırılmış ölçümler, genel ortalama iyi görünse bile belirli gruplarda oluşan performans veya sonuç farklarını ortaya çıkarır.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Model kartının amacı nedir?",
-        ["Modelin kullanım amacı, performansı ve sınırlamalarını belgelemek", "Kredi kartı ödemesi almak", "Modeli otomatik olarak eğitmek", "Ağ trafiğini yönlendirmek"],
-        0,
-        "Model hakkında standart bir bilgi belgesi düşün.",
-        "Model kartları kullanım amacı, veri, performans, sınırlamalar ve etik değerlendirmeler gibi bilgileri belgeler.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Veri sayfası veya veri kartı neyi belgelemeye yardım eder?",
-        ["Veri kümesinin kaynağını, yapısını ve bilinen sınırlamalarını", "Yalnızca modelin fiyatını", "IAM kullanıcısının parolasını", "Sunucunun fiziksel konum çizimini"],
-        0,
-        "Modelden ziyade veri kümesinin geçmişini düşün.",
-        "Veri belgeleri, verinin nasıl toplandığı, kimleri temsil ettiği, hangi dönüşümlerden geçtiği ve hangi riskleri taşıdığı hakkında izlenebilirlik sağlar.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Üretken AI çıktısında toksik içerik riskini azaltmak için ne kullanılabilir?",
-        ["İçerik filtreleri ve koruma politikaları", "Daha geniş yönetici yetkisi", "Daha uzun saklama süresi", "Sınırsız temperature"],
-        0,
-        "Girdi ve çıktıda politika uygulayan kontrolü düşün.",
-        "İçerik filtreleri ve guardrail politikaları zararlı içerik kategorilerini engellemeye yardım eder. Bunlar test ve gözetimle desteklenmelidir.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Mahremiyet açısından veri minimizasyonu ne anlama gelir?",
-        ["Amaç için yalnızca gerekli veriyi toplamak ve işlemek", "Mümkün olan her veriyi sonsuza dek tutmak", "Tüm veriyi herkese açmak", "Yalnızca model boyutunu küçültmek"],
-        0,
-        "Daha az gereksiz kişisel veri daha az risk demektir.",
-        "Veri minimizasyonu, belirli ve meşru amaç için gereken en az miktarda verinin kullanılmasını hedefler.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Bir AI sistemi önemli karar verdiğinde itiraz mekanizması sunmak hangi ilkeyi destekler?",
-        ["Hesap verebilirlik ve insan gözetimi", "Yalnızca performans optimizasyonu", "Veri sıkıştırma", "Model boyutu artırma"],
-        0,
-        "Etkilenen kişinin kararı sorgulayabilmesini düşün.",
-        "İtiraz ve düzeltme yolları, otomatik kararların insanlar tarafından incelenebilmesini sağlayarak hesap verebilirliği destekler.",
-        "Sorumlu AI"
-      ),
-      q(
-        "AI yönetişiminde hesap verebilirlik ne gerektirir?",
-        ["Karar ve riskler için açık sorumluluk sahipleri belirlemeyi", "Sistemin sahibini gizlemeyi", "Tüm kontrolleri modele bırakmayı", "Günlükleri devre dışı bırakmayı"],
-        0,
-        "Bir sorun olduğunda kimin sorumlu olduğunu düşün.",
-        "Hesap verebilirlik, sistemin sonuçlarından, kontrollerinden ve düzeltici eylemlerinden sorumlu rollerin açıkça tanımlanmasını gerektirir.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Model performansını yalnızca dağıtımdan önce ölçmek neden yetersizdir?",
-        ["Veri ve kullanıcı davranışı zamanla değişebilir", "Model dağıtımdan sonra değişmez biçimde kusursuz olur", "Üretimde metrik toplanamaz", "Doğruluk hiçbir zaman ölçülemez"],
-        0,
-        "Gerçek dünya dağılımının zamanla kayabileceğini düşün.",
-        "Veri kayması ve değişen kullanım koşulları kalite ile adaleti bozabilir. Sürekli izleme ve periyodik değerlendirme gerekir.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Kapsayıcı tasarım yaklaşımı hangisidir?",
-        ["Farklı kullanıcı gruplarını gereksinim ve test süreçlerine dahil etmek", "Yalnızca en büyük kullanıcı grubunu test etmek", "Erişilebilirliği sonradan düşünmek", "Tüm kullanıcıların aynı ihtiyacı olduğunu varsaymak"],
-        0,
-        "Etkilenen grupların erken katılımını düşün.",
-        "Farklı deneyim ve ihtiyaçlara sahip kullanıcıları tasarım ve değerlendirmeye dahil etmek dışlanma riskini azaltır.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Bir modelin güven düzeyi düşük olduğunda en uygun davranış ne olabilir?",
-        ["Yanıtı insan incelemesine yönlendirmek veya işlemden kaçınmak", "Sonucu kesin gerçek olarak sunmak", "Güven değerini kullanıcıdan gizlemek", "Rastgele bir eylem yapmak"],
-        0,
-        "Belirsizliği yönetmek için güvenli geri çekilmeyi düşün.",
-        "Düşük güven durumlarında insan incelemesi veya güvenli biçimde yanıt vermeme, hatalı otomasyon riskini azaltır.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Üretken içerikte köken bilgisinin gösterilmesi neyi destekler?",
-        ["İçeriğin kaynağı ve üretim biçimi hakkında şeffaflığı", "Modelin her zaman doğru olmasını", "Depolama maliyetinin sıfırlanmasını", "IAM rollerinin kaldırılmasını"],
-        0,
-        "İçeriğin insan mı AI mı tarafından üretildiğini bilmek önemlidir.",
-        "Köken bilgisi, etiketleme ve uygun filigran teknikleri kullanıcıların içeriğin kaynağını değerlendirmesine yardım eder.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Bir şirket sorumlu AI hedeflerini nasıl ölçülebilir hale getirebilir?",
-        ["Belirli riskler için eşikler, ölçütler ve inceleme sıklığı tanımlayarak", "Yalnızca genel bir iyi niyet metni yazarak", "Tüm kararları model sağlayıcısına bırakarak", "Değerlendirme verisini silerek"],
-        0,
-        "İlkeyi ölçülebilir kontrol ve göstergelere dönüştür.",
-        "Adalet farkı, zararlı çıktı oranı ve insan yönlendirme oranı gibi tanımlı ölçütler ilkelerin uygulamada izlenmesini sağlar.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Enerji tüketimini sorumlu AI değerlendirmesine katmak hangi boyutla ilgilidir?",
-        ["Sürdürülebilirlik", "Yalnızca doğruluk", "Kimlik doğrulama", "Metin çevirisi"],
-        0,
-        "AI sisteminin çevresel etkisini düşün.",
-        "Model boyutu, eğitim ve çıkarım tüketimi gibi çevresel etkileri dikkate almak sürdürülebilir AI uygulamalarının parçasıdır.",
-        "Sorumlu AI"
-      ),
-      q(
-        "Sorumlu AI için en doğru yaşam döngüsü yaklaşımı hangisidir?",
-        ["Riskleri tasarımdan üretim izlemeye kadar sürekli yönetmek", "Yalnızca dağıtım gününde kontrol etmek", "Sadece model sağlayıcısının değerlendirmesine güvenmek", "Sorunları kullanıcı bildirimine kadar görmezden gelmek"],
-        0,
-        "Risk yönetimi tek seferlik bir kontrol değildir.",
-        "Sorumlu AI gereksinimleri kullanım amacı, veri, geliştirme, test, dağıtım, izleme ve kullanımdan kaldırma boyunca ele alınmalıdır.",
-        "Sorumlu AI"
-      ),
-    ],
-  },
-  {
-    id: 8,
-    title: "Güvenlik ve yönetişim",
-    description: "IAM, şifreleme, günlükleme, veri koruma, uyumluluk ve üretken AI tehditleri.",
-    domain: "GÜVENLİK VE YÖNETİŞİM",
-    questions: [
-      q(
-        "AWS paylaşılan sorumluluk modeline göre müşteri neden sorumludur?",
-        ["Kendi verisini, erişim izinlerini ve hizmet yapılandırmasını korumaktan", "AWS veri merkezlerinin fiziksel güvenliğinden", "AWS donanımını üretmekten", "Küresel AWS ağını işletmekten"],
-        0,
-        "Bulutun güvenliği ile buluttaki güvenlik ayrımını düşün.",
-        "AWS bulut altyapısının güvenliğini yönetir. Müşteri ise kullandığı hizmete göre veri, kimlik, erişim ve yapılandırma güvenliğinden sorumludur.",
-        "Güvenlik"
-      ),
-      q(
-        "En az yetki ilkesi neyi gerektirir?",
-        ["Kimliğe yalnızca görev için gereken izinleri vermeyi", "Her kullanıcıya yönetici erişimi vermeyi", "Kimlik doğrulamayı kaldırmayı", "Tüm kaynakları herkese açmayı"],
-        0,
-        "Gereksiz izinleri azalt.",
-        "En az yetki, kullanıcı ve hizmetlerin yalnızca görevlerini tamamlamak için gereken eylem ve kaynaklara erişmesini sağlar.",
-        "Güvenlik"
-      ),
-      q(
-        "AWS KMS ne için kullanılır?",
-        ["Şifreleme anahtarları oluşturmak ve yönetmek", "Metni konuşmaya çevirmek", "Modeli ince ayarlamak", "Belgeden tablo çıkarmak"],
-        0,
-        "Anahtar yönetimi servisinin adını düşün.",
-        "AWS Key Management Service, veriyi koruyan şifreleme anahtarlarını oluşturmayı, yönetmeyi ve kullanımını denetlemeyi sağlar.",
-        "Güvenlik"
-      ),
-      q(
-        "S3 içinde saklanan eğitim verisini korumak için hangi kontrol uygulanmalıdır?",
-        ["Beklemede şifreleme ve kısıtlı erişim politikaları", "Herkese açık yazma izni", "Anonim kullanıcı erişimi", "Tüm sürümleri internette yayımlama"],
-        0,
-        "Hem veri gizliliğini hem kimlerin erişebildiğini düşün.",
-        "Beklemede şifreleme ve uygun S3 ile IAM politikaları, depolanan eğitim verisinin yetkisiz erişime karşı korunmasına yardım eder.",
-        "Güvenlik"
-      ),
-      q(
-        "Veriyi aktarım sırasında korumak için hangi teknoloji kullanılır?",
-        ["TLS", "Düz metin HTTP", "Herkese açık bucket", "Anonim IAM rolü"],
-        0,
-        "İstemci ile hizmet arasındaki bağlantıyı şifrelemeyi düşün.",
-        "TLS, ağ üzerinden aktarılan veriyi şifreleyerek dinleme ve değişiklik riskini azaltır.",
-        "Güvenlik"
-      ),
-      q(
-        "Bir AWS hesabında kim hangi API çağrısını ne zaman yaptı sorusunu hangi servis yanıtlar?",
-        ["AWS CloudTrail", "Amazon Polly", "Amazon Personalize", "AWS Glue DataBrew"],
-        0,
-        "AWS API etkinlik geçmişini düşün.",
-        "AWS CloudTrail, hesap içindeki kullanıcı ve hizmet API etkinliklerini denetim amacıyla kaydeder.",
-        "Güvenlik"
-      ),
-      q(
-        "Amazon CloudWatch ile AI uygulamasında ne izlenebilir?",
-        ["Metrikler, günlükler ve alarmlar", "Yalnızca çalışanların izin günleri", "Model sağlayıcısının özel eğitim verisi", "Fiziksel veri merkezi ziyaretçileri"],
-        0,
-        "Operasyonel gözlemlenebilirliği düşün.",
-        "CloudWatch, gecikme, hata, kullanım ve kaynak metriklerini toplar; günlüklar ve alarmlarla operasyonel izleme sağlar.",
-        "Güvenlik"
-      ),
-      q(
-        "AWS Secrets Manager hangi veri türü için uygundur?",
-        ["API anahtarları ve veritabanı kimlik bilgileri", "Genel ürün açıklamaları", "Model değerlendirme grafikleri", "Anonim kullanım istatistikleri"],
-        0,
-        "Uygulama koduna gömülmemesi gereken sırları düşün.",
-        "Secrets Manager, parolalar ve API anahtarları gibi sırları güvenli saklama, erişme ve döndürme yetenekleri sağlar.",
-        "Güvenlik"
-      ),
-      q(
-        "Amazon Macie bir AI veri gölüne nasıl katkı sağlar?",
-        ["S3 içindeki hassas verileri keşfedip raporlayarak", "Temel modeli eğiterek", "Sesli yanıt üreterek", "Model gecikmesini düşürerek"],
-        0,
-        "S3 veri güvenliğini düşün.",
-        "Macie, S3 içinde kişisel bilgi ve kimlik bilgisi gibi hassas veri örüntülerini bulmaya yardım eder.",
-        "Güvenlik"
-      ),
-      q(
-        "Kişisel bilgileri LLM istemine göndermeden önce maskelemek hangi amacı destekler?",
-        ["Veri gizliliğini ve minimizasyonu", "Model boyutunu artırmayı", "Ağ gecikmesini yükseltmeyi", "Herkese açık erişimi"],
-        0,
-        "Gereksiz hassas bilgiyi model çağrısından çıkar.",
-        "Maskeleme veya redaksiyon, görev için gerekmeyen kişisel verinin işlenmesini önleyerek gizlilik riskini azaltır.",
-        "Veri koruma"
-      ),
-      q(
-        "VPC endpoint kullanmanın bir yararı nedir?",
-        ["Desteklenen AWS servislerine trafiği genel internete çıkarmadan yönlendirmek", "Tüm IAM kontrollerini kaldırmak", "Modeli otomatik eğitmek", "Her veriyi halka açmak"],
-        0,
-        "Özel ağ bağlantısını düşün.",
-        "VPC endpoint, desteklenen servislere VPC içinden özel bağlantı kurulmasına ve internet geçidi ihtiyacının azaltılmasına yardım eder.",
-        "Güvenlik"
-      ),
-      q(
-        "Model girdilerinin yetkisiz biçimde eğitim verisini bozmaya çalışmasına ne ad verilir?",
-        ["Veri zehirleme", "Kümeleme", "Özetleme", "Tokenlaştırma"],
-        0,
-        "Saldırgan eğitim verisine kötü örnekler ekler.",
-        "Veri zehirleme, model davranışını bozmak veya arka kapı oluşturmak için eğitim verisinin kasıtlı biçimde değiştirilmesidir.",
-        "AI tehditleri"
-      ),
-      q(
-        "Model tedarik zinciri riskini azaltmak için hangisi yapılmalıdır?",
-        ["Model ve veri kaynağını doğrulayıp sürüm ve bütünlük kayıtlarını tutmak", "Kaynağı bilinmeyen her modeli doğrudan üretime almak", "Lisans bilgilerini yok saymak", "Değerlendirmeyi atlamak"],
-        0,
-        "Bileşenlerin kökeni ve güvenilirliğini düşün.",
-        "Kaynak, lisans, bütünlük, sürüm ve güvenlik değerlendirmesi model ile veri tedarik zincirindeki riski azaltır.",
-        "AI tehditleri"
-      ),
-      q(
-        "AWS Artifact ne sağlar?",
-        ["AWS uyumluluk raporları ve anlaşmalarına erişim", "Gerçek zamanlı metin çevirisi", "Model ince ayarı", "Vektör araması"],
-        0,
-        "Denetçiyle paylaşılabilecek AWS belgelerini düşün.",
-        "AWS Artifact, AWS güvenlik ve uyumluluk raporları ile belirli çevrim içi anlaşmalara isteğe bağlı erişim sağlar.",
-        "Uyumluluk"
-      ),
-      q(
-        "AWS Config ne için kullanılabilir?",
-        ["Kaynak yapılandırmalarını kaydetmek ve kurallara uygunluğu değerlendirmek", "Metin özetlemek", "Görüntü üretmek", "Ses dosyasını yazıya çevirmek"],
-        0,
-        "Kaynakların zaman içindeki yapılandırma durumunu düşün.",
-        "AWS Config, desteklenen kaynakların yapılandırma geçmişini izler ve tanımlı kurallara uyumunu değerlendirebilir.",
-        "Yönetişim"
-      ),
-      q(
-        "Veri yerleşimi gereksinimi olan bir AI çözümünde ilk hangi karar önemlidir?",
-        ["Verinin işleneceği ve saklanacağı AWS Bölgesini doğrulamak", "Yalnızca arayüz rengini seçmek", "Temperature değerini yükseltmek", "Tüm kullanıcılara aynı rolü vermek"],
-        0,
-        "Yasal gereksinim verinin coğrafi konumuyla ilgilidir.",
-        "Bölge seçimi, hizmetin kullanılabilirliğiyle birlikte verinin işlenme ve saklanma konumuna ilişkin gereksinimlerle değerlendirilmelidir.",
-        "Uyumluluk"
-      ),
-      q(
-        "Veri saklama politikası neyi tanımlamalıdır?",
-        ["Verinin ne kadar süre tutulacağını ve nasıl güvenli silineceğini", "Modelin marka rengini", "Her istemin en uzun yanıtını", "Çalışanın cihaz modelini"],
-        0,
-        "Veri yaşam döngüsünün sonunu düşün.",
-        "Saklama politikası iş ve mevzuat gereksinimlerine göre tutma süresini, arşivlemeyi ve güvenli silmeyi tanımlar.",
-        "Yönetişim"
-      ),
-      q(
-        "Bir kuruluş AI kullanımını onaylamak için neden risk sınıflandırması yapmalıdır?",
-        ["Kontrol düzeyini kullanımın etkisi ve hassasiyetine göre belirlemek", "Her kullanıma aynı düşük kontrolü uygulamak", "Tüm AI projelerini otomatik reddetmek", "Yalnızca maliyeti gizlemek"],
-        0,
-        "Düşük etkili özetleme ile yüksek etkili kredi kararının aynı olmadığını düşün.",
-        "Risk sınıflandırması, insan gözetimi, test, belge ve onay gereksinimlerini kullanım senaryosunun etkisine göre uyarlamayı sağlar.",
-        "Yönetişim"
-      ),
-      q(
-        "Bedrock Guardrails neden tek başına tam bir güvenlik çözümü değildir?",
-        ["Kimlik, ağ, veri koruma, izleme ve uygulama kontrolleri yine gerekir", "Hiç içerik filtresi sunmaz", "Yalnızca veritabanı yedekler", "IAM yerine geçen tek servistir"],
-        0,
-        "Katmanlı savunmayı düşün.",
-        "Guardrails içerik ve konu kontrolleri sağlar; fakat en az yetki, şifreleme, ağ güvenliği, doğrulama ve izleme gibi kontrollerin yerini almaz.",
-        "Güvenlik"
-      ),
-      q(
-        "Üretken AI günlüklerinde hassas veri riski nasıl azaltılır?",
-        ["Günlükleme öncesi redaksiyon ve sıkı erişim ile saklama politikası uygulayarak", "Günlükleri herkese açarak", "Her istemi süresiz saklayarak", "Şifrelemeyi kapatarak"],
-        0,
-        "Gözlemlenebilirlik ile veri gizliliğini birlikte yönet.",
-        "Hassas alanları maskelemek, günlük erişimini sınırlandırmak, şifrelemek ve uygun saklama süresi tanımlamak veri sızıntısı riskini azaltır.",
-        "Güvenlik"
-      ),
-    ],
-  },
-  {
-    id: 5,
-    title: "İstem ve model uyarlama",
-    description: "İstem teknikleri, çıkarım ayarları, ince ayar yöntemleri ve performans ölçümü.",
-    domain: "TEMEL MODEL UYGULAMALARI",
-    questions: [
-      q(
-        "Modele hiçbir örnek vermeden yalnızca görevi açıklamak hangi istem tekniğidir?",
-        ["Zero shot istem", "Few shot istem", "İnce ayar", "Kümeleme"],
-        0,
-        "Model yalnızca talimata dayanır.",
-        "Zero shot istem, modelden örnek sunmadan bir görevi yerine getirmesini ister.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "İstemde birkaç girdi ve doğru çıktı örneği göstermek hangi tekniktir?",
-        ["Few shot istem", "Zero shot istem", "Veri şifreleme", "Model damıtma"],
-        0,
-        "Few sözcüğü az sayıda örneği ifade eder.",
-        "Few shot istem, modele beklenen örüntüyü göstermek için birkaç örnek içerir.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Bir sistem isteminin temel rolü nedir?",
-        ["Modelin genel rolünü ve davranış kurallarını belirlemek", "Kullanıcı parolasını saklamak", "Model sunucusunu yeniden başlatmak", "Vektör indeksini silmek"],
-        0,
-        "Konuşmanın tamamında geçerli üst düzey yönlendirmeyi düşün.",
-        "Sistem istemi, modelin rolü, tonu, kısıtları ve nasıl yanıt vermesi gerektiği için üst düzey talimatlar sağlar.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Uzun bir istemde kaynak metni üç tırnak veya XML etiketleri içine almak ne sağlar?",
-        ["Talimat ile verinin sınırlarını açıklaştırır", "Modeli otomatik olarak eğitir", "Bağlam penceresini büyütür", "Veriyi KMS ile şifreler"],
-        0,
-        "Ayraçlar bölümlerin karışmasını önler.",
-        "Belirgin ayraçlar, modelin talimatları kaynak içerikten ayırmasını kolaylaştırır ve istemin yapısını netleştirir.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Modelden makine tarafından işlenecek sonuç isteniyorsa istemde ne belirtilmelidir?",
-        ["Kesin çıktı şeması ve örneği", "Yalnızca daha yaratıcı ol talimatı", "Mümkün olan en yüksek temperature", "Model sağlayıcısının geçmişi"],
-        0,
-        "Tüketici uygulamanın beklediği biçimi açıkça tarif et.",
-        "JSON alanları gibi açık bir çıktı şeması ve örnek, yanıtın uygulama tarafından güvenilir biçimde işlenmesini kolaylaştırır.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Bir istem şablonundaki değişkenlerin yararı nedir?",
-        ["Aynı yapıyı farklı girdilerle yeniden kullanmak", "Model ağırlıklarını değiştirmek", "Her kullanıcıya yönetici yetkisi vermek", "Bağlam sınırını kaldırmak"],
-        0,
-        "Sabit talimat ile değişen veriyi ayırmayı düşün.",
-        "Şablon değişkenleri, tutarlı talimat yapısını koruyup müşteri adı veya belge içeriği gibi değerleri dinamik vermeyi sağlar.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Modelin yalnızca verilen belgeden yanıt vermesini sağlamak için en iyi istem talimatı hangisidir?",
-        ["Yanıt belgede yoksa bilmediğini söylemesini istemek", "Temperature değerini en yükseğe çıkarmak", "Belgeyi istemden çıkarmak", "Her durumda bir cevap uydurmasını istemek"],
-        0,
-        "Desteklenmeyen iddiaları azaltacak bir geri çekilme davranışı tanımla.",
-        "Kaynakta destek bulunmadığında bunu açıkça söyleme talimatı, temelsiz yanıt riskini azaltır. Yine de değerlendirme ve koruma katmanları gerekir.",
-        "İstem mühendisliği"
-      ),
-      q(
-        "Top p ayarı neyi kontrol eder?",
-        ["Bir sonraki token seçimi için dikkate alınan olasılık kütlesini", "Modelin IAM rolünü", "S3 depolama sınıfını", "Eğitim verisinin lisansını"],
-        0,
-        "Nucleus sampling olarak da bilinir.",
-        "Top p, kümülatif olasılığı belirlenen eşiğe ulaşan token adaylarını örnekleme havuzuna alır.",
-        "Çıkarım ayarları"
-      ),
-      q(
-        "Maksimum token ayarı hangi sonucu doğrudan sınırlar?",
-        ["Üretilecek yanıtın uzunluğunu", "Modelin eğitim veri miktarını", "AWS hesabındaki kullanıcı sayısını", "Vektör boyutunu her zaman"],
-        0,
-        "Çıktının ne zaman kesileceğini düşün.",
-        "Maksimum token değeri, modelin tek yanıtta üretebileceği token sayısına üst sınır koyar.",
-        "Çıkarım ayarları"
-      ),
-      q(
-        "Yaratıcı slogan üretiminde hangi ayar yaklaşımı daha uygun olabilir?",
-        ["Temperature değerini ölçülü biçimde artırmak", "Tüm çeşitliliği sıfırlamak", "Bağlamı tamamen kaldırmak", "IAM erişimini genişletmek"],
-        0,
-        "Bu görevde kontrollü çeşitlilik faydalıdır.",
-        "Daha yüksek temperature farklı ifade seçeneklerini teşvik edebilir. Değer yine kalite testleriyle belirlenmelidir.",
-        "Çıkarım ayarları"
-      ),
-      q(
-        "İstem enjeksiyonu nedir?",
-        ["Kötü niyetli girdinin model talimatlarını geçersiz kılmaya çalışması", "Modelin hızını artıran donanım tekniği", "Veri kümesini dengeleme yöntemi", "Bir değerlendirme ölçütü"],
-        0,
-        "Kullanıcı girdisi gizli veya üst düzey talimatları aşmaya çalışır.",
-        "İstem enjeksiyonunda saldırgan girdi, modeli güvenilir talimatları görmezden gelmeye veya istenmeyen eylem yapmaya yöneltir.",
-        "İstem güvenliği"
-      ),
-      q(
-        "İstem enjeksiyonu riskini azaltmak için hangisi en uygundur?",
-        ["Girdiyi güvenilmeyen veri sayıp erişimleri sınırlandırmak ve çıktıyı doğrulamak", "Modele sınırsız araç izni vermek", "Sistem istemini kullanıcıya düzenletmek", "Tüm günlükleri kapatmak"],
-        0,
-        "Savunmayı yalnızca modele bırakma.",
-        "Girdi doğrulama, açık talimat sınırları, en az yetkili araç erişimi, koruma katmanları ve çıktı doğrulama birlikte kullanılmalıdır.",
-        "İstem güvenliği"
-      ),
-      q(
-        "Sık değişen ürün stok bilgilerini modele kazandırmak için neden ince ayar yerine RAG tercih edilir?",
-        ["Bilgi kaynağı model ağırlıklarını değiştirmeden güncellenebilir", "RAG hiçbir veri kaynağı gerektirmez", "İnce ayar yalnızca görüntüler içindir", "RAG her yanıtı garanti eder"],
-        0,
-        "Bilginin güncellik hızını düşün.",
-        "RAG güncel kaynaktan bilgi getirir. İnce ayarı her stok değişiminde tekrarlamak pahalı ve yavaş olur.",
-        "Model uyarlama"
-      ),
-      q(
-        "Denetimli ince ayar için hangi veri gerekir?",
-        ["Yüksek kaliteli girdi ve beklenen çıktı çiftleri", "Yalnızca etiketsiz rastgele kayıtlar", "Sadece IAM günlükleri", "Hiç örnek gerektirmez"],
-        0,
-        "Modele istenen davranışı örneklerle göstermek gerekir.",
-        "Denetimli ince ayar, hedef görevi ve doğru davranışı temsil eden etiketli girdi çıktı örneklerinden yararlanır.",
-        "Model uyarlama"
-      ),
-      q(
-        "İnce ayarın olası bir riski nedir?",
-        ["Düşük kaliteli veride önyargı veya aşırı öğrenme", "Modelin artık hiçbir çıktı üretememesi zorunluluğu", "S3 verisinin otomatik silinmesi", "IAM politikalarının devre dışı kalması"],
-        0,
-        "Uyarlama verisinin kalitesi model davranışını etkiler.",
-        "Yetersiz, dengesiz veya hatalı ince ayar verisi istenmeyen davranışları güçlendirebilir ve genelleme yeteneğini azaltabilir.",
-        "Model uyarlama"
-      ),
-      q(
-        "RLHF kısaltması hangi yaklaşımı ifade eder?",
-        ["İnsan geri bildiriminden pekiştirmeli öğrenme", "Hızlı dil dosyası çoğaltma", "Rastgele log filtreleme", "İlişkisel veri yükleme"],
-        0,
-        "İnsan tercihleri model davranışını yönlendirir.",
-        "RLHF, insan değerlendirmelerinden alınan tercih sinyalleriyle model davranışını uyarlayan yaklaşımdır.",
-        "Model uyarlama"
-      ),
-      q(
-        "Bir özetleme modelinde ROUGE ölçütü genel olarak neyi karşılaştırır?",
-        ["Üretilen özet ile referans özet arasındaki metin örtüşmesini", "Sunucu işlemci kullanımını", "IAM izin sayısını", "S3 nesne boyutunu"],
-        0,
-        "Referans metindeki kelime dizilerinin ne kadarının yakalandığını düşün.",
-        "ROUGE, özellikle özetleme görevlerinde üretilen metin ile referans metin arasındaki n gram örtüşmesini ölçmek için kullanılır.",
-        "Model değerlendirme"
-      ),
-      q(
-        "BLEU ölçütü en çok hangi görevle ilişkilidir?",
-        ["Makine çevirisi", "Görüntü segmentasyonu", "Anomali kümeleme", "Erişim denetimi"],
-        0,
-        "Üretilen çeviriyi referans çeviriyle karşılaştırır.",
-        "BLEU, makine çevirisi çıktısının bir veya daha fazla referans çeviriyle örtüşmesini değerlendiren otomatik ölçüttür.",
-        "Model değerlendirme"
-      ),
-      q(
-        "İnsan değerlendirmesi ne zaman özellikle değerlidir?",
-        ["Ton, yararlılık ve nüans gibi otomatik ölçülmesi zor niteliklerde", "Yalnızca işlemci sıcaklığını ölçerken", "S3 nesnesi sayarken", "IAM rolü oluştururken"],
-        0,
-        "Her kalite boyutu kelime eşleşmesiyle ölçülemez.",
-        "İnsanlar doğruluk yanında yararlılık, uygunluk, ton ve incelikli tercihleri değerlendirebilir.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Bir istem değişikliğinin gerçekten iyileştirme sağladığını belirlemenin en güvenilir yolu nedir?",
-        ["Sabit değerlendirme veri kümesinde önceki sürümle karşılaştırmak", "Tek bir başarılı örneğe bakmak", "Yalnızca istemi uzatmak", "Sonucu ölçmeden yayımlamak"],
-        0,
-        "Kontrollü ve tekrarlanabilir karşılaştırma yap.",
-        "Sürüm kontrollü istemleri temsilî bir değerlendirme kümesinde aynı ölçütlerle karşılaştırmak değişikliğin etkisini görünür kılar.",
-        "Model değerlendirme"
-      ),
-    ],
-  },
-  {
-    id: 6,
-    title: "RAG, ajanlar ve değerlendirme",
-    description: "Bilgi getirme akışı, ajan tasarımı, kalite ölçümü, gözlemleme ve maliyet dengesi.",
-    domain: "TEMEL MODEL UYGULAMALARI",
-    questions: [
-      q(
-        "Bir RAG sisteminde belgeler neden parçalara ayrılır?",
-        ["İlgili küçük bölümlerin aranıp bağlama eklenebilmesi için", "Belgeleri otomatik olarak gizlemek için", "IAM rollerini çoğaltmak için", "Modeli her parçada yeniden eğitmek için"],
-        0,
-        "Uzun belgenin tamamı yerine ilgili kesitleri bulmayı düşün.",
-        "Parçalama, belgeleri arama ve bağlam sınırları için yönetilebilir bölümlere ayırır. Parça boyutu kaliteyi etkileyen bir tasarım kararıdır.",
-        "RAG"
-      ),
-      q(
-        "RAG veri alım sürecinde gömme modeli ne yapar?",
-        ["Metin parçalarını anlamsal vektörlere dönüştürür", "Kullanıcıya IAM rolü verir", "Her belgeyi seslendirir", "Model çıktısını şifre anahtarına çevirir"],
-        0,
-        "Vektör araması için sayısal temsil gerekir.",
-        "Gömme modeli belge parçalarını ve sorguyu anlamsal benzerlik hesabında kullanılabilecek vektörlere dönüştürür.",
-        "RAG"
-      ),
-      q(
-        "RAG sorgu anında doğru işlem sırası hangisidir?",
-        ["Sorguyu göm, ilgili parçaları getir, bağlama ekle, yanıt üret", "Yanıt üret, modeli eğit, veriyi sil, sorguyu göm", "Belgeyi sil, temperature artır, yanıt üret", "Kullanıcı oluştur, ağı kur, modeli indir"],
-        0,
-        "Önce bilgi bulunur, sonra üretim yapılır.",
-        "RAG akışı sorgu temsilini oluşturur, en ilgili içerikleri getirir, bunları isteme ekler ve modelden temellendirilmiş yanıt ister.",
-        "RAG"
-      ),
-      q(
-        "RAG sisteminde kaynak gösterimi neden yararlıdır?",
-        ["Kullanıcının yanıtı dayandığı belgelerle doğrulamasına yardım eder", "Yanıtın mutlaka doğru olduğunu garanti eder", "Model ihtiyacını kaldırır", "Tüm erişim kontrollerini değiştirir"],
-        0,
-        "Şeffaflık ve doğrulanabilirliği düşün.",
-        "Kaynak atıfları, kullanıcıların yanıtın dayanağını incelemesine yardımcı olur ancak doğruluğu tek başına garanti etmez.",
-        "RAG"
-      ),
-      q(
-        "RAG bilgi tabanındaki belgeler güncellendiğinde ne yapılmalıdır?",
-        ["Değişen içerik yeniden işlenip indeks senkronize edilmelidir", "Temel model her zaman baştan eğitilmelidir", "Tüm IAM kullanıcıları silinmelidir", "Temperature sıfırlanmalıdır"],
-        0,
-        "Arama indeksinin kaynakla aynı bilgiyi taşıması gerekir.",
-        "Yeni veya değişen belgelerin parçalanıp gömmelerinin güncellenmesi, getirilen içeriğin güncel kalmasını sağlar.",
-        "RAG"
-      ),
-      q(
-        "Çok küçük belge parçaları kullanmanın olası sakıncası nedir?",
-        ["Anlamı tamamlayan bağlamın parçalanması", "Vektör aramasının tamamen imkansız olması", "IAM politikalarının bozulması", "Belgelerin otomatik silinmesi"],
-        0,
-        "Bir cümlenin komşu bilgilerden kopabileceğini düşün.",
-        "Çok küçük parçalar önemli bağlamı kaybedebilir. Çok büyük parçalar ise ilgisiz içeriği bağlama taşıyabilir.",
-        "RAG"
-      ),
-      q(
-        "Hibrit arama hangi iki yaklaşımı birleştirir?",
-        ["Anahtar kelime ve anlamsal vektör aramasını", "Ses ve görüntü üretimini", "Eğitim ve faturalamayı", "IAM ve DNS yönetimini"],
-        0,
-        "Tam terim eşleşmesi ile anlam benzerliğini birlikte düşün.",
-        "Hibrit arama, kesin anahtar kelime eşleşmesinin güçlü yanlarını anlamsal vektör aramasıyla birleştirir.",
-        "RAG"
-      ),
-      q(
-        "Bir ajanın temel modelden farkı nedir?",
-        ["Araç kullanarak planlı eylemler gerçekleştirebilmesi", "Hiç dil modeli kullanmaması", "Yalnızca tek kelime üretmesi", "Her zaman insan olması"],
-        0,
-        "Ajan çıktı üretmenin ötesinde çevreyle etkileşir.",
-        "Ajan, modelin akıl yürütme yeteneğini araçlar, API işlemleri, bellek ve düzenleme adımlarıyla birleştirir.",
-        "Ajanlar"
-      ),
-      q(
-        "Bir ajana araç izni verirken en güvenli yaklaşım hangisidir?",
-        ["Yalnızca gereken eylem ve kaynaklara en az yetki vermek", "Tüm hesaba yönetici erişimi vermek", "Kimlik doğrulamayı kaldırmak", "Tüm API çağrılarını anonim yapmak"],
-        0,
-        "Hata veya kötüye kullanım etkisini sınırlamayı düşün.",
-        "En az yetki ilkesi, ajanın yalnızca görevi için gereken eylemleri yapabilmesini sağlayarak etki alanını sınırlar.",
-        "Ajanlar"
-      ),
-      q(
-        "Para transferi gibi yüksek etkili bir ajan eyleminde hangi kontrol önemlidir?",
-        ["İşlem öncesinde insan onayı istemek", "Temperature değerini yükseltmek", "Tüm denetim günlüklerini kapatmak", "Sınırsız yeniden deneme yapmak"],
-        0,
-        "Geri alınması zor işlemlerde insanı döngüde tut.",
-        "Yüksek riskli veya geri alınması zor eylemler için insan onayı güvenli bir kontrol noktası sağlar.",
-        "Ajanlar"
-      ),
-      q(
-        "Ajanın bir konuşmadaki önceki bilgileri kullanması hangi kavramla ilişkilidir?",
-        ["Oturum bağlamı veya bellek", "Veri ambarı sıkıştırması", "Model damıtma", "DNS yönlendirme"],
-        0,
-        "Aynı etkileşimde geçmiş adımları hatırlamayı düşün.",
-        "Oturum bağlamı veya bellek, ajanın önceki mesaj ve eylemleri dikkate alarak tutarlı ilerlemesine yardımcı olur.",
-        "Ajanlar"
-      ),
-      q(
-        "Bir ajanın aynı aracı sonsuz döngüde çağırmasını önlemek için ne yapılabilir?",
-        ["Adım ve yeniden deneme sınırları koymak", "Ajana daha fazla yönetici izni vermek", "Tüm zaman aşımı değerlerini kaldırmak", "Her yanıtı bellekte sonsuza dek tutmak"],
-        0,
-        "Kaynak tüketimini sınırlayan çalışma sınırlarını düşün.",
-        "Maksimum adım, zaman aşımı ve yeniden deneme sınırları ajanın kontrolsüz döngüye girmesini engellemeye yardımcı olur.",
-        "Ajanlar"
-      ),
-      q(
-        "Bir soru yanıtlama sisteminde exact match ölçütü neyi kontrol eder?",
-        ["Üretilen cevabın referans cevapla tam eşleşmesini", "Anlamca benzer her yanıtı insan gibi değerlendirmeyi", "Sunucu gecikmesini", "Şifreleme gücünü"],
-        0,
-        "Bu ölçüt yüzey biçimine karşı katıdır.",
-        "Exact match, model çıktısının beklenen referansla tam olarak aynı olup olmadığını ölçer ve anlamca doğru farklı ifadeleri kaçırabilir.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Bir üretken AI uygulamasında yalnızca kaliteyi ölçmek neden yeterli değildir?",
-        ["Gecikme, maliyet, güvenlik ve kullanıcı deneyimi de başarıyı etkiler", "Kalite hiçbir zaman önemli değildir", "Maliyet her zaman sıfırdır", "Gecikme yalnızca eğitimde vardır"],
-        0,
-        "Üretim ortamında birden fazla iş hedefi vardır.",
-        "Uygulama seçimi kalite yanında gecikme, token maliyeti, güvenlik, ölçeklenebilirlik ve kullanıcı memnuniyetini dengelemelidir.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Çevrim dışı değerlendirme ile çevrim içi değerlendirme arasındaki temel fark nedir?",
-        ["Çevrim dışı değerlendirme sabit veriyle, çevrim içi değerlendirme gerçek kullanım sinyalleriyle yapılır", "İkisi her zaman aynıdır", "Çevrim içi değerlendirme internet hızını ölçer", "Çevrim dışı değerlendirme veri kullanmaz"],
-        0,
-        "Laboratuvar veri kümesi ile gerçek kullanıcı davranışını karşılaştır.",
-        "Çevrim dışı testler sürümleri kontrollü veriyle karşılaştırır. Çevrim içi testler gerçek trafikte memnuniyet ve görev başarısı gibi sinyalleri ölçer.",
-        "Model değerlendirme"
-      ),
-      q(
-        "A B testi ne sağlar?",
-        ["İki sürümü benzer kullanıcı gruplarında karşılaştırmayı", "Modeli otomatik şifrelemeyi", "Tüm kullanıcıları tek sürüme zorlamayı", "Eğitim verisini etiketlemeyi"],
-        0,
-        "İki varyantın gerçek davranış üzerindeki etkisi ölçülür.",
-        "A B testi, iki uygulama veya istem sürümünü ayrılmış trafik üzerinde karşılaştırarak hangisinin hedef ölçütte daha iyi olduğunu gösterir.",
-        "Model değerlendirme"
-      ),
-      q(
-        "Üretken AI uygulamasında gecikmeyi azaltmanın bir yolu hangisidir?",
-        ["Görev için yeterli olan daha küçük ve hızlı modeli değerlendirmek", "Her isteme ilgisiz uzun belgeler eklemek", "Maksimum çıktıyı sınırsız yapmak", "Her yanıtta ince ayar başlatmak"],
-        0,
-        "En büyük model her zaman gerekli değildir.",
-        "Görev kalitesini karşılayan daha küçük model, kısa bağlam ve uygun çıktı sınırı gecikme ile maliyeti azaltabilir.",
-        "Performans ve maliyet"
-      ),
-      q(
-        "Token maliyetini düşürmek için hangi yaklaşım uygundur?",
-        ["Gereksiz bağlamı kaldırıp istem ve çıktıyı özlü tutmak", "Aynı belgeyi istemde birkaç kez tekrarlamak", "Her zaman en uzun yanıtı istemek", "Bütün geçmiş konuşmaları sınırsız eklemek"],
-        0,
-        "İşlenen girdi ve üretilen çıktı miktarını düşün.",
-        "Daha kısa ve ilgili bağlam ile kontrollü çıktı uzunluğu, kaliteyi koruyarak işlenen token miktarını azaltabilir.",
-        "Performans ve maliyet"
-      ),
-      q(
-        "Bir RAG sisteminde getirme kalitesi düşükse ilk hangi bileşen incelenmelidir?",
-        ["Parçalama, gömme ve arama yapılandırması", "Yalnızca kullanıcı ekranının rengi", "IAM kullanıcı adı uzunluğu", "S3 fatura adresi"],
-        0,
-        "Yanlış belge parçaları modele geliyorsa üretimden önceki aşamaya bak.",
-        "Getirme başarısı parça boyutu, meta veri filtreleri, gömme modeli ve arama yöntemiyle yakından ilişkilidir.",
-        "RAG"
-      ),
-      q(
-        "Üretim ortamında kullanıcı geri bildirimi ne için kullanılmalıdır?",
-        ["Hata örüntülerini bulup değerlendirme veri kümesini geliştirmek", "Her geri bildirimi doğrulamadan eğitim verisine eklemek", "Denetim günlüklerini silmek", "Erişim kontrollerini kaldırmak"],
-        0,
-        "Geri bildirimi kontrollü bir iyileştirme döngüsüne bağla.",
-        "İncelenen geri bildirimler hata türlerini ortaya çıkarabilir, yeni test örnekleri oluşturabilir ve güvenli iyileştirmeleri yönlendirebilir.",
-        "Model değerlendirme"
-      ),
+      q("What is the defining capability of generative AI?", "Creating new content from patterns learned in data", ["Only sorting existing records", "Always following fixed rules", "Producing only numeric forecasts"], "Think about new text, images, audio, or code.", "Generative AI creates new content based on patterns learned during training.", "Generative AI fundamentals"),
+      q("What is a foundation model?", "A broadly trained model that can be adapted to many downstream tasks", ["A fixed rule written for one customer", "A database index", "A hardware monitoring utility"], "One model can support many different tasks.", "Foundation models are pretrained on broad data and can be adapted for summarization, generation, question answering, and other tasks.", "Generative AI fundamentals"),
+      q("What is a token in a large language model?", "A unit of text processed by the model", ["The physical server hosting the model", "Always one complete paragraph", "The encryption key for an API"], "A word can be split into several of these units.", "A token can be a word, part of a word, punctuation, or another text unit used by the model.", "Generative AI fundamentals"),
+      q("What is the primary benefit of attention in a transformer architecture?", "It weights relationships among different parts of the input", ["It permanently encrypts data", "It connects the model to the internet", "It forces every response to be identical"], "The model decides which earlier words matter most.", "Attention helps the model focus on relevant parts of its input when creating representations and outputs.", "Generative AI fundamentals"),
+      q("What does a model's context window limit?", "The number of tokens it can consider in one interaction", ["The number of AWS Regions it can use", "The number of training users", "The length of an encryption key"], "Think of the model's working memory for a request.", "The context window is the total token capacity available for input and output in an interaction.", "Generative AI fundamentals"),
+      q("What is it called when a language model produces plausible but unsupported information?", "Hallucination", ["Clustering", "Normalization", "Encryption"], "Fluent output is not always factual.", "A hallucination is a confident sounding output that is false or not supported by a reliable source.", "Generative AI fundamentals"),
+      q("What generally happens when the temperature setting is increased?", "Outputs become more varied and less predictable", ["Responses always become shorter", "The model is retrained", "The context window becomes larger"], "This setting changes randomness during token selection.", "Higher temperature increases sampling diversity, which can improve creativity but reduce consistency.", "Generative AI fundamentals"),
+      q("What is a text embedding?", "A numeric vector that represents semantic meaning", ["An encrypted backup of the text", "A system prompt", "A transcript of an audio file"], "Semantically similar text is placed close together in vector space.", "Embeddings represent semantic properties as numeric vectors that can be compared mathematically.", "Generative AI fundamentals"),
+      q("How does vector search differ from exact keyword search?", "It can retrieve content based on semantic similarity", ["It accepts only exact matches", "It automatically labels all data", "It retrains the foundation model"], "The same idea can be expressed using different words.", "Vector search compares embeddings and can find related meaning even when exact words do not match.", "Generative AI fundamentals"),
+      q("Diffusion models are most commonly associated with which generative task?", "Image generation", ["Relational table joins", "IAM authorization", "DNS resolution"], "Consider gradually removing noise to form a visual.", "Diffusion models are widely used to generate images by learning a process that reverses noise.", "Generative AI fundamentals"),
+      q("What is the defining feature of a multimodal model?", "It can process more than one data modality, such as text and images", ["It works in only one language", "It requires several AWS accounts", "It produces only structured tables"], "A modality is a type of data.", "Multimodal models can understand or generate combinations of text, image, audio, and video.", "Generative AI fundamentals"),
+      q("What is the main objective of pretraining?", "Learning general patterns from a large dataset", ["Assigning a password to one user", "Archiving model logs", "Sending every output to a human reviewer"], "This happens before adaptation to a specific business task.", "Pretraining teaches a model broad representations that can later support many downstream tasks.", "Generative AI fundamentals"),
+      q("When does inference occur in a generative AI application?", "When a trained model generates output for a new prompt", ["When raw data is first labeled", "When model weights are initially learned", "When the server is shut down"], "Think about the moment a user asks for a response.", "Inference is the runtime process of applying a trained model to new input.", "Generative AI fundamentals"),
+      q("What is the goal of prompt engineering?", "Designing model input to produce useful and reliable output", ["Physically modifying model hardware", "Automatically encrypting a database", "Training a new model for every request"], "Consider instructions, context, examples, and output format.", "Prompt engineering structures instructions and supporting context to guide model behavior.", "Generative AI fundamentals"),
+      q("How should temperature be adjusted to obtain more consistent responses from the same prompt?", "Lower it", ["Raise it", "Randomize it for every request", "Set it equal to the context length"], "The goal is to reduce randomness.", "Lower temperature concentrates sampling on more likely tokens and usually makes output more predictable.", "Generative AI fundamentals"),
+      q("Which limitation is important to remember when using an LLM?", "It does not guarantee the factual accuracy of its responses", ["It cannot generate text", "It accepts only one word at a time", "It always requires a physical robot"], "Fluency and truth are different qualities.", "LLM output can contain factual errors and should be verified for high impact uses.", "Generative AI fundamentals"),
+      q("What is the primary purpose of retrieval augmented generation, or RAG?", "Grounding responses with relevant information retrieved from external sources", ["Retraining the model for every question", "Making every response random", "Converting all data into images"], "The first word in RAG refers to finding information.", "RAG retrieves relevant content and places it in the prompt so the model can answer from current or private knowledge.", "Generative AI fundamentals"),
+      q("When might fine tuning be more appropriate than RAG?", "When the model needs a lasting change in style or task behavior", ["When facts change every hour", "When source citations are the only goal", "When no training examples exist"], "Distinguish teaching behavior from retrieving knowledge.", "Fine tuning adapts behavior using examples, while RAG is generally better for frequently changing factual knowledge.", "Generative AI fundamentals"),
+      q("Turning a long customer call transcript into a short set of key points is which generative AI task?", "Summarization", ["Clustering", "Anomaly detection", "Object detection"], "The goal is to preserve the main information in fewer words.", "Summarization produces a shorter representation of the most important content.", "Generative AI fundamentals"),
+      q("What should be evaluated first when considering a generative AI use case?", "The business problem and a measurable desired outcome", ["Only the model parameter count", "The popularity of the model name", "The highest possible temperature"], "Technology should serve a business result.", "A valuable AI initiative begins with a clear problem, measurable success criteria, suitable data, and acceptable risk.", "Generative AI fundamentals"),
     ],
   },
   {
     id: 3,
-    title: "AWS AI servisleri",
-    description: "Hazır AI servisleri ile depolama, analiz ve makine öğrenmesi servislerini doğru eşleştir.",
-    domain: "AWS AI SERVİSLERİ",
+    title: "AWS AI services",
+    description: "Match managed AI, storage, analytics, and machine learning services to their use cases.",
+    domain: "AWS AI SERVICES",
     questions: [
-      q(
-        "Bir şirket, müşteri yorumlarındaki duygu ve anahtar ifadeleri kod yazmadan çıkarmak istiyor. Hangi servis uygundur?",
-        ["Amazon Comprehend", "Amazon Rekognition", "Amazon Polly", "Amazon Personalize"],
-        0,
-        "Metin içindeki anlam ve duygu analizine odaklanan servisi düşün.",
-        "Amazon Comprehend, metinlerden duygu, varlık, anahtar ifade ve başka doğal dil bilgileri çıkarır.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Taranmış faturalardaki tablo ve form alanlarını çıkarmak için hangi servis kullanılmalıdır?",
-        ["Amazon Textract", "Amazon Translate", "Amazon Transcribe", "Amazon Lex"],
-        0,
-        "Belge metni ile yapısını birlikte çıkaran servisi düşün.",
-        "Amazon Textract, taranmış belgelerden metin, el yazısı, form alanları ve tablolar çıkarabilir.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Çağrı merkezi ses kayıtlarını yazıya dönüştürmek için en uygun servis hangisidir?",
-        ["Amazon Transcribe", "Amazon Polly", "Amazon Translate", "Amazon Rekognition"],
-        0,
-        "Ses girdisini metin çıktısına çeviren servisi seç.",
-        "Amazon Transcribe otomatik konuşma tanıma kullanarak sesi metne dönüştürür.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Bir eğitim uygulamasında metni doğal sesli anlatıma çevirmek için hangi servis kullanılmalıdır?",
-        ["Amazon Polly", "Amazon Comprehend", "Amazon Textract", "Amazon Personalize"],
-        0,
-        "Metinden konuşmaya dönüşümü düşün.",
-        "Amazon Polly, metni gerçeğe yakın konuşmaya dönüştüren bir metinden sese servisidir.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Ürün açıklamalarını İngilizceden Türkçeye otomatik çevirmek için hangi servis uygundur?",
-        ["Amazon Translate", "Amazon Transcribe", "Amazon Lex", "Amazon SageMaker AI"],
-        0,
-        "İki doğal dil arasında dönüşüm gerekiyor.",
-        "Amazon Translate, desteklenen diller arasında otomatik metin çevirisi sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Görsellerde nesne, yüz veya uygunsuz içerik tespit etmek için hangi servis kullanılır?",
-        ["Amazon Rekognition", "Amazon Comprehend", "Amazon Polly", "AWS Glue"],
-        0,
-        "Adında yeniden tanıma anlamını taşıyan görüntü servisini düşün.",
-        "Amazon Rekognition görüntü ve videolarda nesne, yüz, metin ve uygunsuz içerik analizi yapabilir.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Sesli ve yazılı konuşma botu oluşturmak isteyen ekip hangi AWS servisini seçmelidir?",
-        ["Amazon Lex", "Amazon Textract", "Amazon Macie", "Amazon Redshift"],
-        0,
-        "Bu servis konuşma arayüzlerinin yapı taşlarını sağlar.",
-        "Amazon Lex, konuşma tanıma ve doğal dil anlama yetenekleriyle sohbet botları oluşturmayı sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Bir medya platformu her kullanıcıya kişiselleştirilmiş içerik önermek istiyor. Hangi servis uygundur?",
-        ["Amazon Personalize", "Amazon Polly", "Amazon Translate", "AWS Artifact"],
-        0,
-        "Kullanıcı davranışına göre öneri veren yönetilen servisi düşün.",
-        "Amazon Personalize, uygulamalara gerçek zamanlı kişiselleştirilmiş öneriler eklemek için kullanılır.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Veri bilimciler özel bir makine öğrenmesi modeli oluşturmak, eğitmek ve dağıtmak istiyor. Hangi servis en kapsamlı ortamı sağlar?",
-        ["Amazon SageMaker AI", "Amazon Polly", "Amazon Lex", "AWS Artifact"],
-        0,
-        "Hazır bir AI API yerine uçtan uca ML platformu aranıyor.",
-        "Amazon SageMaker AI, özel makine öğrenmesi modellerini hazırlama, oluşturma, eğitme ve dağıtma yetenekleri sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Amazon SageMaker JumpStart ne sağlar?",
-        ["Önceden eğitilmiş modeller ve hazır çözüm başlangıçları", "Yalnızca ağ güvenlik duvarı", "Alan adı kaydı", "Ses dosyası depolama"],
-        0,
-        "Adındaki JumpStart hızlı başlangıcı anlatır.",
-        "SageMaker JumpStart, önceden eğitilmiş modelleri ve çözüm şablonlarını keşfedip daha hızlı kullanmaya başlamayı sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Bir ekip, altyapı yönetmeden farklı sağlayıcılara ait temel modellere tek API üzerinden erişmek istiyor. Hangi servis uygundur?",
-        ["Amazon Bedrock", "Amazon EC2 Auto Scaling", "Amazon RDS", "AWS Data Exchange"],
-        0,
-        "AWS üzerinde yönetilen temel model servisini düşün.",
-        "Amazon Bedrock, çeşitli temel modellere ve üretken AI geliştirme yeteneklerine yönetilen erişim sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Anlamsal arama için gömme vektörlerini indekslemek isteyen ekip hangi servisten yararlanabilir?",
-        ["Amazon OpenSearch Service", "Amazon Polly", "Amazon Transcribe", "AWS Budgets"],
-        0,
-        "Arama ve vektör indeksleme yeteneği olan servisi düşün.",
-        "Amazon OpenSearch Service, vektör indeksleri ve benzerlik aramasıyla anlamsal arama çözümlerini destekler.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Amazon S3 içindeki hassas verileri keşfetmek için hangi servis kullanılır?",
-        ["Amazon Macie", "Amazon Lex", "Amazon Personalize", "Amazon Polly"],
-        0,
-        "Bu güvenlik servisi S3 verilerini hassasiyet açısından inceler.",
-        "Amazon Macie, makine öğrenmesi ve örüntü eşleme kullanarak Amazon S3 içindeki hassas verileri keşfeder.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Model eğitim verilerini dayanıklı bir nesne deposunda saklamak için hangi servis uygundur?",
-        ["Amazon S3", "Amazon Lex", "Amazon Polly", "AWS IAM"],
-        0,
-        "AWS nesne depolama servisini seç.",
-        "Amazon S3, eğitim verileri ve model çıktıları gibi nesneler için ölçeklenebilir ve dayanıklı depolama sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Sunucu yönetmeden bir Bedrock isteğini olay üzerine tetiklemek için hangi işlem servisi uygundur?",
-        ["AWS Lambda", "Amazon EC2", "Amazon Redshift", "AWS Artifact"],
-        0,
-        "Olay odaklı ve sunucusuz kod çalıştırmayı düşün.",
-        "AWS Lambda, sunucu yönetmeden olaylar üzerine kod çalıştırabilir ve Bedrock gibi servisleri çağırabilir.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "AI uygulamasının gecikme ve hata metriklerini izlemek için hangi servis kullanılmalıdır?",
-        ["Amazon CloudWatch", "Amazon Translate", "Amazon Textract", "AWS Data Exchange"],
-        0,
-        "Metrik, günlük ve alarm servisidir.",
-        "Amazon CloudWatch uygulama ve AWS kaynaklarından metrik, günlük ve olay toplayarak izleme sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Yapılandırılmış analitik veriler üzerinde büyük ölçekli SQL sorguları çalıştırmak için hangi servis uygundur?",
-        ["Amazon Redshift", "Amazon Polly", "Amazon Rekognition", "AWS Secrets Manager"],
-        0,
-        "Bulut veri ambarı servisini düşün.",
-        "Amazon Redshift, büyük ölçekli analitik iş yükleri için yönetilen veri ambarı yetenekleri sağlar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Veri kataloglama ve ayıklama, dönüştürme, yükleme süreçleri için hangi servis uygundur?",
-        ["AWS Glue", "Amazon Lex", "Amazon Polly", "AWS KMS"],
-        0,
-        "Veri bütünleştirme servisini düşün.",
-        "AWS Glue, veri keşfi, kataloglama ve ayıklama, dönüştürme, yükleme işleri için yönetilen veri bütünleştirme yetenekleri sunar.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Kod yazmadan veri kalitesi sorunlarını görsel olarak temizlemek ve dönüştürmek için hangi araç uygundur?",
-        ["AWS Glue DataBrew", "Amazon Transcribe", "Amazon Rekognition", "AWS CloudTrail"],
-        0,
-        "Glue ailesindeki görsel veri hazırlama aracını düşün.",
-        "AWS Glue DataBrew, veri analistlerinin kod yazmadan veriyi keşfetmesine, temizlemesine ve dönüştürmesine yardım eder.",
-        "AWS servis seçimi"
-      ),
-      q(
-        "Bir kuruluş, hazır AI API kullanmak yerine kendi özel algoritmasını tam kontrolle çalıştırmak istiyor. En uygun genel yaklaşım hangisidir?",
-        ["Amazon SageMaker AI üzerinde özel model geliştirmek", "Amazon Polly ile ses üretmek", "Amazon Translate ile metni çevirmek", "AWS Artifact ile rapor indirmek"],
-        0,
-        "İş gereksinimi özel model ve yaşam döngüsü kontrolüdür.",
-        "Özel algoritma, eğitim ve dağıtım kontrolü gerekiyorsa SageMaker AI hazır amaçlı AI servislerinden daha uygun bir platformdur.",
-        "AWS servis seçimi"
-      ),
+      q("A company wants to detect sentiment and key phrases in customer reviews. Which AWS service should it use?", "Amazon Comprehend", ["Amazon Rekognition", "Amazon Polly", "Amazon Personalize"], "Choose the service that analyzes meaning in text.", "Amazon Comprehend extracts sentiment, entities, key phrases, and other natural language insights from text.", "AWS service selection"),
+      q("Which service extracts text, tables, and form fields from scanned invoices?", "Amazon Textract", ["Amazon Translate", "Amazon Transcribe", "Amazon Lex"], "The input is a document with both text and structure.", "Amazon Textract detects printed text, handwriting, forms, and tables in documents.", "AWS service selection"),
+      q("Which service converts recorded contact center conversations into text?", "Amazon Transcribe", ["Amazon Polly", "Amazon Translate", "Amazon Rekognition"], "The input is speech and the output is text.", "Amazon Transcribe provides automatic speech recognition to convert audio into text.", "AWS service selection"),
+      q("Which service converts written training material into natural sounding speech?", "Amazon Polly", ["Amazon Comprehend", "Amazon Textract", "Amazon Personalize"], "Look for text to speech capability.", "Amazon Polly synthesizes speech from text using a selection of natural sounding voices.", "AWS service selection"),
+      q("Which service translates product descriptions from English to another supported language?", "Amazon Translate", ["Amazon Transcribe", "Amazon Lex", "Amazon SageMaker AI"], "The task converts text between human languages.", "Amazon Translate provides automatic neural machine translation between supported languages.", "AWS service selection"),
+      q("Which service detects objects, faces, text, and unsafe content in images or video?", "Amazon Rekognition", ["Amazon Comprehend", "Amazon Polly", "AWS Glue"], "Choose the managed computer vision service.", "Amazon Rekognition analyzes images and video for objects, faces, text, activities, and content moderation labels.", "AWS service selection"),
+      q("Which AWS service is designed for building conversational voice and text interfaces?", "Amazon Lex", ["Amazon Textract", "Amazon Macie", "Amazon Redshift"], "It provides intents, slots, and conversational interfaces.", "Amazon Lex supports chatbots using automatic speech recognition and natural language understanding.", "AWS service selection"),
+      q("A media platform needs personalized recommendations for each user. Which service should it use?", "Amazon Personalize", ["Amazon Polly", "Amazon Translate", "AWS Artifact"], "The output is a ranked set of items for an individual.", "Amazon Personalize uses interaction data to create real time personalized recommendations.", "AWS service selection"),
+      q("Data scientists need to build, train, and deploy a custom machine learning model. Which service provides the broadest platform?", "Amazon SageMaker AI", ["Amazon Polly", "Amazon Lex", "AWS Artifact"], "The team needs an end to end ML environment rather than a purpose built API.", "Amazon SageMaker AI supports the lifecycle of developing, training, evaluating, and deploying custom ML models.", "AWS service selection"),
+      q("What does Amazon SageMaker JumpStart provide?", "Pretrained models and ready to use solution templates", ["Only network firewall rules", "Domain name registration", "Audio file storage"], "The name suggests a faster start.", "SageMaker JumpStart helps teams discover and use pretrained models and packaged solutions.", "AWS service selection"),
+      q("A team wants managed API access to foundation models from multiple providers. Which service should it use?", "Amazon Bedrock", ["Amazon EC2 Auto Scaling", "Amazon RDS", "AWS Data Exchange"], "Choose the managed generative AI service.", "Amazon Bedrock provides managed access to foundation models and tools for building generative AI applications.", "AWS service selection"),
+      q("Which service can index embedding vectors for semantic search?", "Amazon OpenSearch Service", ["Amazon Polly", "Amazon Transcribe", "AWS Budgets"], "Choose the search service with vector indexing support.", "Amazon OpenSearch Service supports vector indexes and similarity search for semantic retrieval workloads.", "AWS service selection"),
+      q("Which service discovers sensitive data stored in Amazon S3?", "Amazon Macie", ["Amazon Lex", "Amazon Personalize", "Amazon Polly"], "This security service analyzes S3 data.", "Amazon Macie uses machine learning and pattern matching to discover sensitive data in S3.", "AWS service selection"),
+      q("Which service is commonly used as durable object storage for training datasets and model artifacts?", "Amazon S3", ["Amazon Lex", "Amazon Polly", "AWS IAM"], "Choose the AWS object storage service.", "Amazon S3 provides scalable and durable object storage for datasets, artifacts, and application content.", "AWS service selection"),
+      q("Which compute service can invoke a Bedrock model in response to an event without managing servers?", "AWS Lambda", ["Amazon EC2", "Amazon Redshift", "AWS Artifact"], "Think of event driven serverless compute.", "AWS Lambda runs code in response to events and can call services such as Amazon Bedrock without server management.", "AWS service selection"),
+      q("Which service monitors latency, errors, logs, and alarms for an AI application?", "Amazon CloudWatch", ["Amazon Translate", "Amazon Textract", "AWS Data Exchange"], "Choose the AWS observability service.", "Amazon CloudWatch collects metrics, logs, and events and can create alarms for operational monitoring.", "AWS service selection"),
+      q("Which service is a managed data warehouse for large scale SQL analytics?", "Amazon Redshift", ["Amazon Polly", "Amazon Rekognition", "AWS Secrets Manager"], "The requirement is analytical SQL at scale.", "Amazon Redshift is a managed cloud data warehouse designed for analytical workloads.", "AWS service selection"),
+      q("Which service supports data discovery, cataloging, and extract, transform, and load jobs?", "AWS Glue", ["Amazon Lex", "Amazon Polly", "AWS KMS"], "Choose the managed data integration service.", "AWS Glue provides a data catalog and managed data integration capabilities for analytics and ML pipelines.", "AWS service selection"),
+      q("Which service lets analysts visually clean and transform data without writing code?", "AWS Glue DataBrew", ["Amazon Transcribe", "Amazon Rekognition", "AWS CloudTrail"], "It belongs to the AWS Glue family.", "AWS Glue DataBrew is a visual data preparation tool for profiling, cleaning, and transforming data.", "AWS service selection"),
+      q("A company needs full control over a custom prediction algorithm rather than a purpose built AI API. Which approach is most appropriate?", "Develop the custom model with Amazon SageMaker AI", ["Generate speech with Amazon Polly", "Translate text with Amazon Translate", "Download reports from AWS Artifact"], "The requirement is custom model development and lifecycle control.", "SageMaker AI is more suitable than a purpose built AI service when a team must train and deploy its own algorithm.", "AWS service selection"),
     ],
   },
   {
     id: 4,
     title: "Amazon Bedrock",
-    description: "Model erişimi, bilgi tabanları, ajanlar, koruma katmanları ve çalışma seçenekleri.",
+    description: "Model access, knowledge bases, agents, guardrails, evaluation, and inference options.",
     domain: "AMAZON BEDROCK",
     questions: [
-      q(
-        "Amazon Bedrock en doğru nasıl tanımlanır?",
-        ["Temel modellerle üretken AI uygulamaları geliştirmek için yönetilen servis", "Yalnızca ilişkisel veritabanı", "Fiziksel robot yönetim sistemi", "Alan adı kayıt servisi"],
-        0,
-        "Temel modeller ve yönetilen altyapı anahtar kavramlardır.",
-        "Amazon Bedrock, çeşitli temel modelleri ve üretken AI uygulama bileşenlerini sunan tam yönetilen bir servistir.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock kullanmanın önemli bir yararı nedir?",
-        ["Altyapıyı yönetmeden farklı temel modelleri deneyebilmek", "Tüm modellerin aynı yetenekte olması", "Her kullanımda model eğitmenin zorunlu olması", "Yalnızca AWS tarafından üretilen modellere erişim"],
-        0,
-        "Model seçimi ve yönetilen hizmet avantajını düşün.",
-        "Bedrock, AWS ve üçüncü taraf sağlayıcıların modellerini yönetilen API üzerinden karşılaştırmayı ve kullanmayı kolaylaştırır.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bir ekip modeli kod yazmadan istemlerle denemek istiyor. Bedrock içindeki hangi özellik uygundur?",
-        ["Playground", "AWS Artifact", "S3 Glacier", "VPC Flow Logs"],
-        0,
-        "Konsolda etkileşimli model deneme alanını düşün.",
-        "Bedrock Playground, modelleri ve çıkarım ayarlarını örnek istemlerle etkileşimli biçimde denemeyi sağlar.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Amazon Bedrock Guardrails ne için kullanılır?",
-        ["İstenmeyen içerik ve konular için koruma politikaları uygulamak", "Model sunucularına fiziksel erişim vermek", "Veri ambarı sorgulamak", "DNS kayıtlarını değiştirmek"],
-        0,
-        "Girdi ve çıktılara güvenlik sınırı koymayı düşün.",
-        "Bedrock Guardrails, zararlı içerik, reddedilen konular ve hassas bilgi gibi alanlarda yapılandırılabilir koruma uygular.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock Knowledge Bases özelliğinin temel kullanım amacı nedir?",
-        ["RAG iş akışını yöneterek kurumsal verilerle temellendirilmiş yanıtlar üretmek", "EC2 işletim sistemini yamalamak", "Kullanıcı parolalarını depolamak", "Ses dosyalarını konuşmaya çevirmek"],
-        0,
-        "Bilgi getirme ve üretimi birleştiren yaklaşımı düşün.",
-        "Bedrock Knowledge Bases, veri kaynaklarını alıp ilgili parçaları getirerek temel model yanıtlarını kurumsal bilgiyle temellendirir.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock Agents hangi ihtiyaca yanıt verir?",
-        ["Modelin araç ve API kullanarak çok adımlı görevleri yürütmesine", "Yalnızca görsel depolamaya", "Fiziksel sunucu kurulumuna", "DNS önbelleğini temizlemeye"],
-        0,
-        "Sadece metin üretmek yerine eylem planlamayı düşün.",
-        "Bedrock Agents, temel modelin talebi yorumlamasına, adımları düzenlemesine ve tanımlı eylem grupları ile bilgi kaynaklarını kullanmasına yardımcı olur.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock Model Evaluation neyi kolaylaştırır?",
-        ["Modelleri kalite ve sorumlu AI ölçütleriyle karşılaştırmayı", "IAM kullanıcılarını silmeyi", "Nesneleri arşivlemeyi", "Alan adı satın almayı"],
-        0,
-        "Bir kullanım senaryosu için model seçmeden önce kıyaslama gerekir.",
-        "Model değerlendirme, otomatik ölçütler veya insan değerlendirmesiyle modellerin belirli veri ve görevlerde karşılaştırılmasını sağlar.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Trafiği düzensiz ve düşük olan yeni bir uygulama için hangi çıkarım seçeneği genellikle uygundur?",
-        ["İstek üzerine çıkarım", "Sürekli ayrılmış fiziksel veri merkezi", "Her istek için ince ayar", "S3 Glacier geri yükleme"],
-        0,
-        "Kullanım kadar ödeme ve başlangıç esnekliğini düşün.",
-        "İstek üzerine çıkarım, önceden kapasite ayırmadan değişken trafik için esnek başlangıç sağlar.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Kararlı ve yüksek hacimli bir iş yükünde belirli kapasite ihtiyacı varsa hangi seçenek değerlendirilebilir?",
-        ["Provisioned Throughput", "S3 Glacier Deep Archive", "Amazon Route 53", "AWS Artifact"],
-        0,
-        "Önceden ayrılmış model kapasitesini düşün.",
-        "Provisioned Throughput, desteklenen modeller için ayrılmış çıkarım kapasitesi sunar ve öngörülebilir yüksek hacimli iş yüklerine uygundur.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Gerçek zamanlı yanıt gerektirmeyen çok sayıda istemi daha uygun maliyetle işlemek için hangi yaklaşım kullanılabilir?",
-        ["Toplu çıkarım", "Her istemde model eğitimi", "Yalnızca sohbet Playground", "Manuel ekran görüntüsü"],
-        0,
-        "İstekleri çevrim dışı bir iş olarak birlikte işlemeyi düşün.",
-        "Toplu çıkarım, gecikmeye duyarlı olmayan büyük girdi kümelerini asenkron olarak işlemek için uygundur.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock Prompt Management özelliği ne sağlar?",
-        ["İstemleri oluşturma, sürümleme ve yeniden kullanma", "KMS anahtarlarını fiziksel olarak üretme", "Model ağırlıklarını herkese açma", "Ağ paketlerini yönlendirme"],
-        0,
-        "İstem yaşam döngüsünü düşün.",
-        "Prompt Management, istem şablonlarının yönetilmesini, değişkenlerle kullanılmasını ve sürümler halinde saklanmasını kolaylaştırır.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock kullanıcı verileriyle ilgili en doğru ifade hangisidir?",
-        ["İstemler ve çıktılar temel modelleri eğitmek için model sağlayıcılarla paylaşılmaz", "Her istem herkese açık veri kümesine eklenir", "Tüm veriler zorunlu olarak tek Bölgede işlenir", "Kullanıcı verileri hiçbir şekilde şifrelenemez"],
-        0,
-        "Yönetilen servisin veri koruma yaklaşımını düşün.",
-        "AWS, Bedrock girdilerini ve çıktılarını temel modelleri eğitmek için kullanmaz ve bunları model sağlayıcılarla paylaşmaz.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Belirli bir ekibin yalnızca onaylı Bedrock modelini çağırabilmesi için hangi AWS özelliği kullanılmalıdır?",
-        ["IAM politikaları", "Amazon Polly sesleri", "S3 yaşam döngüsü", "AWS Budgets raporu"],
-        0,
-        "Kim hangi kaynağa hangi eylemi yapabilir sorusunu düşün.",
-        "IAM politikaları, Bedrock kaynakları ve model çağırma eylemleri için ayrıntılı erişim denetimi sağlar.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Kuruma özgü sık değişen politika belgeleriyle yanıt veren asistan için en uygun Bedrock yaklaşımı hangisidir?",
-        ["Knowledge Bases ile RAG", "Her belge değişiminde temel modeli baştan eğitmek", "Yalnızca temperature artırmak", "Metni görüntüye dönüştürmek"],
-        0,
-        "Güncel bilgiye dış kaynaktan erişim gerekir.",
-        "RAG, değişen belgeleri bilgi kaynağından getirerek yanıtı güncel içerikle temellendirir ve sürekli model eğitimi ihtiyacını azaltır.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock Flows hangi sorunu çözmeye yardımcı olur?",
-        ["Modeller, istemler ve AWS hizmetleri arasında üretken AI iş akışı düzenlemek", "Fiziksel ağ kablosu yönetmek", "S3 depolama sınıfı seçmek", "Alan adı kaydetmek"],
-        0,
-        "Birden fazla üretken AI adımını görsel olarak bağlamayı düşün.",
-        "Bedrock Flows, istem, model, bilgi tabanı ve diğer bileşenleri birbirine bağlayan üretken AI iş akışları kurmayı kolaylaştırır.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Farklı temel modeller arasından seçim yaparken en iyi yaklaşım hangisidir?",
-        ["Gerçek kullanım verisiyle kalite, gecikme ve maliyeti birlikte değerlendirmek", "Her zaman en büyük modeli seçmek", "Yalnızca sağlayıcının adına bakmak", "Temperature değeri en yüksek modeli seçmek"],
-        0,
-        "Tek bir ölçüt tüm iş gereksinimlerini karşılamaz.",
-        "Model seçimi görev kalitesi, gecikme, maliyet, bağlam kapasitesi ve uyumluluk gibi birden fazla gereksinime göre yapılmalıdır.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Amazon Nova nedir?",
-        ["Amazon tarafından sunulan bir temel model ailesi", "Yalnızca S3 şifreleme türü", "Bir ilişkisel veritabanı motoru", "AWS destek planı"],
-        0,
-        "Bedrock model kataloğunda yer alan Amazon markalı modeli düşün.",
-        "Amazon Nova, Bedrock üzerinden erişilebilen ve farklı üretken AI görevlerini destekleyen Amazon temel model ailesidir.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bir Bedrock ajanının harici rezervasyon API'sini çağırması için ne tanımlanmalıdır?",
-        ["Eylem grubu", "S3 yaşam döngüsü", "CloudFront dağıtımı", "Redshift görünümü"],
-        0,
-        "Ajanın gerçekleştirebileceği işlemler bir grup içinde tarif edilir.",
-        "Eylem grupları, ajanın bir görevi tamamlamak için çağırabileceği işlevleri ve API şemalarını tanımlar.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock model çağrı günlükleri hangi amaçla etkinleştirilebilir?",
-        ["Sorun giderme ve denetim için girdi, çıktı ve çağrı ayrıntılarını izlemek", "Modeli otomatik olarak halka açmak", "IAM gereksinimini kaldırmak", "Her çıktıyı doğru kabul etmek"],
-        0,
-        "Gözlemlenebilirlik ve denetim izini düşün.",
-        "Yapılandırılan model çağrı günlükleri, kullanımın izlenmesine ve sorunların incelenmesine yardım eder. Hassas veri riskleri için günlük yapılandırması dikkatle yönetilmelidir.",
-        "Amazon Bedrock"
-      ),
-      q(
-        "Bedrock Guardrails kullanmak hangi gereksinimi ortadan kaldırmaz?",
-        ["Uygulamaya özgü test ve insan gözetimini", "İçerik filtreleme politikasını", "Reddedilen konu tanımını", "Hassas bilgi filtresi yapılandırmasını"],
-        0,
-        "Tek bir kontrol tüm riskleri tek başına çözmez.",
-        "Guardrails güçlü bir savunma katmanıdır ancak uygulama testi, erişim kontrolü, izleme ve gerektiğinde insan gözetimi yine gerekir.",
-        "Amazon Bedrock"
-      ),
+      q("Which description best defines Amazon Bedrock?", "A managed service for building generative AI applications with foundation models", ["A relational database service", "A physical robot management system", "A domain registration service"], "Foundation models and managed infrastructure are the key ideas.", "Amazon Bedrock provides managed access to foundation models and components for generative AI applications.", "Amazon Bedrock"),
+      q("What is a major benefit of using Amazon Bedrock?", "Teams can evaluate and use different foundation models without managing model infrastructure", ["Every available model has identical capabilities", "A model must be retrained for every request", "Only Amazon created models are available"], "Consider model choice and managed operations.", "Bedrock provides a common managed experience for models from Amazon and third party providers.", "Amazon Bedrock"),
+      q("Which Bedrock feature lets a team test models and prompts interactively without writing application code?", "Playgrounds", ["AWS Artifact", "S3 Glacier", "VPC Flow Logs"], "Look for the interactive area in the Bedrock console.", "Bedrock playgrounds allow interactive testing of prompts, models, and inference settings.", "Amazon Bedrock"),
+      q("What is the purpose of Amazon Bedrock Guardrails?", "Applying configurable safety and content policies to model input and output", ["Granting physical server access", "Querying a data warehouse", "Changing DNS records"], "Think of boundaries for topics, content, and sensitive data.", "Guardrails can apply content filters, denied topics, word filters, and sensitive information controls.", "Amazon Bedrock"),
+      q("What is the primary purpose of Knowledge Bases for Amazon Bedrock?", "Managing RAG workflows that ground responses in enterprise data", ["Patching EC2 operating systems", "Storing user passwords", "Converting text into speech"], "It combines information retrieval with generation.", "Knowledge Bases ingest data sources and retrieve relevant content for grounded model responses.", "Amazon Bedrock"),
+      q("Which need is addressed by Agents for Amazon Bedrock?", "Orchestrating multistep tasks that use tools and APIs", ["Storing images only", "Installing physical servers", "Clearing DNS caches"], "An agent can plan and take actions, not just produce text.", "Bedrock Agents interpret requests, plan steps, and use configured action groups and knowledge sources.", "Amazon Bedrock"),
+      q("What does model evaluation in Amazon Bedrock help a team do?", "Compare models using quality and responsible AI criteria", ["Delete IAM users", "Archive S3 objects", "Register domain names"], "Evaluation supports model selection for a specific use case.", "Bedrock model evaluation supports automated metrics and human evaluation to compare candidate models.", "Amazon Bedrock"),
+      q("Which inference option is usually appropriate for a new application with low and irregular traffic?", "On demand inference", ["A permanently reserved physical data center", "Fine tuning for every request", "S3 Glacier restoration"], "Consider flexibility with no capacity commitment.", "On demand inference is a flexible starting point for variable traffic and usage based billing.", "Amazon Bedrock"),
+      q("Which option can provide reserved model capacity for a stable, high volume workload?", "Provisioned Throughput", ["S3 Glacier Deep Archive", "Amazon Route 53", "AWS Artifact"], "The application needs committed inference capacity.", "Provisioned Throughput provides reserved capacity for supported models and predictable workloads.", "Amazon Bedrock"),
+      q("Which approach suits a large set of requests that does not require real time responses?", "Batch inference", ["Training a model for every prompt", "Using only the chat playground", "Capturing manual screenshots"], "Process many requests asynchronously as one job.", "Batch inference is appropriate for high volume offline processing where immediate results are not required.", "Amazon Bedrock"),
+      q("What does Bedrock Prompt Management provide?", "Creation, versioning, and reuse of prompt templates", ["Physical generation of KMS keys", "Public access to model weights", "Network packet routing"], "Think about the prompt lifecycle.", "Prompt Management helps teams manage reusable prompt templates, variables, and versions.", "Amazon Bedrock"),
+      q("Which statement about customer content submitted to Amazon Bedrock is correct?", "Inputs and outputs are not used to train the underlying foundation models", ["Every prompt becomes public training data", "All data must be processed in one fixed Region", "Customer content cannot be encrypted"], "Consider the service's data protection design.", "AWS does not use Bedrock inputs and outputs to train the foundation models or share them with model providers.", "Amazon Bedrock"),
+      q("How can an administrator allow a team to invoke only approved Bedrock models?", "Use IAM policies", ["Select Amazon Polly voices", "Create an S3 lifecycle rule", "Configure an AWS Budgets report"], "Control who can perform which action on which resource.", "IAM policies provide granular access control for Bedrock actions and resources.", "Amazon Bedrock"),
+      q("Which Bedrock approach is best for an assistant that answers from frequently changing company policy documents?", "Use Knowledge Bases with RAG", ["Retrain a foundation model after every change", "Only increase temperature", "Convert the documents into images"], "The source knowledge must remain current.", "RAG retrieves current policy content without repeatedly changing the foundation model weights.", "Amazon Bedrock"),
+      q("What do Amazon Bedrock Flows help a team build?", "Generative AI workflows connecting prompts, models, knowledge bases, and services", ["Physical network cabling plans", "S3 storage class policies only", "Domain registrations"], "Think about connecting several generative AI steps.", "Bedrock Flows orchestrate components into repeatable generative AI workflows.", "Amazon Bedrock"),
+      q("What is the best way to select among foundation models in Amazon Bedrock?", "Evaluate quality, latency, cost, and safety on representative data", ["Always select the largest model", "Select only by provider name", "Choose the model with the highest temperature"], "One metric cannot represent every business requirement.", "Model selection should balance task quality, latency, cost, context capacity, safety, and compliance.", "Amazon Bedrock"),
+      q("What is Amazon Nova?", "A family of foundation models from Amazon", ["An S3 encryption mode", "A relational database engine", "An AWS Support plan"], "Look for the Amazon model family available through Bedrock.", "Amazon Nova is a family of Amazon foundation models available for generative AI workloads.", "Amazon Bedrock"),
+      q("What must be configured for a Bedrock agent to call an external reservation API?", "An action group", ["An S3 lifecycle rule", "A CloudFront distribution", "A Redshift view"], "Define the actions and API schema the agent may use.", "Action groups describe the functions and API operations an agent can invoke to complete tasks.", "Amazon Bedrock"),
+      q("Why might a team enable Bedrock model invocation logging?", "To support monitoring, troubleshooting, and auditing of model calls", ["To make the model public automatically", "To remove the need for IAM", "To guarantee every response is accurate"], "Consider observability and an audit trail.", "Invocation logging can capture request metadata and configured input or output details, subject to careful sensitive data controls.", "Amazon Bedrock"),
+      q("Which requirement is not eliminated by using Bedrock Guardrails?", "Application testing and appropriate human oversight", ["Content filter configuration", "Denied topic configuration", "Sensitive information policy configuration"], "No single control manages every AI risk.", "Guardrails are one defense layer and do not replace testing, access control, monitoring, and human review where needed.", "Amazon Bedrock"),
     ],
   },
   {
-    id: 2,
-    title: "Üretken AI temelleri",
-    description: "Temel modeller, token, bağlam, gömme, üretim ayarları ve yaygın sınırlamalar.",
-    domain: "ÜRETKEN AI TEMELLERİ",
+    id: 5,
+    title: "Prompting and model adaptation",
+    description: "Prompt techniques, inference controls, fine tuning methods, and performance measurement.",
+    domain: "FOUNDATION MODEL APPLICATIONS",
     questions: [
-      q(
-        "Üretken yapay zekanın ayırt edici özelliği nedir?",
-        ["Öğrendiği örüntülere dayanarak yeni içerik üretmesi", "Yalnızca kayıtları sıralaması", "Her zaman sabit kurallar izlemesi", "Sadece sayısal tahmin yapması"],
-        0,
-        "Metin, görüntü ve ses gibi yeni çıktıları düşün.",
-        "Üretken AI, eğitim verisindeki örüntülerden yararlanarak yeni metin, görüntü, ses veya başka içerikler oluşturur.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Temel model kavramı neyi ifade eder?",
-        ["Geniş veriyle eğitilip birçok göreve uyarlanabilen büyük modeli", "Tek bir müşteri için yazılan sabit kuralı", "Yalnızca veritabanı indeksini", "Donanım izleme aracını"],
-        0,
-        "Aynı modelin farklı aşağı akış görevlerine uyarlanabildiğini düşün.",
-        "Temel modeller geniş veri üzerinde önceden eğitilir ve özetleme, soru yanıtlama veya üretim gibi birçok göreve uyarlanabilir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Büyük dil modelinde token nedir?",
-        ["Metnin model tarafından işlenen parçası", "Modelin fiziksel sunucusu", "Yalnızca tam bir paragraf", "Şifreleme anahtarının kendisi"],
-        0,
-        "Bir kelime bazen birden fazla parçaya ayrılabilir.",
-        "Token, modelin metni işlerken kullandığı kelime, kelime parçası veya işaret gibi temel birimdir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Transformer mimarisinde attention mekanizmasının temel yararı nedir?",
-        ["Girdinin farklı bölümleri arasındaki ilişkileri ağırlıklandırmak", "Veriyi kalıcı olarak şifrelemek", "Modeli internete bağlamak", "Her yanıtı aynı yapmak"],
-        0,
-        "Model bir sözcüğü yorumlarken diğer sözcüklere ne kadar bakacağını belirler.",
-        "Attention, modelin çıktı üretirken girdinin ilgili parçalarına farklı ağırlıklar vermesini sağlar.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Bir modelin bağlam penceresi neyi sınırlar?",
-        ["Tek istekte dikkate alabileceği token miktarını", "Kullanabileceği AWS Bölgesi sayısını", "Eğitimdeki kullanıcı sayısını", "Şifreleme anahtarının uzunluğunu"],
-        0,
-        "İstem ve çıktı için modelin çalışma belleğini düşün.",
-        "Bağlam penceresi modelin bir etkileşimde işleyebildiği toplam token kapasitesini ifade eder.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Bir dil modelinin kulağa ikna edici gelen ancak gerçekte yanlış bilgi üretmesine ne ad verilir?",
-        ["Halüsinasyon", "Kümeleme", "Normalleştirme", "Şifreleme"],
-        0,
-        "Akıcı bir yanıt her zaman doğru olmayabilir.",
-        "Halüsinasyon, üretken modelin desteklenmeyen veya hatalı bilgiyi güvenilir bir dille üretmesidir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Bir dil modelinde temperature değeri artırılırsa genel olarak ne beklenir?",
-        ["Daha çeşitli ve daha az öngörülebilir çıktılar", "Daima daha kısa yanıtlar", "Modelin yeniden eğitilmesi", "Bağlam penceresinin büyümesi"],
-        0,
-        "Bu ayar olası sonraki tokenlar arasındaki seçim çeşitliliğini etkiler.",
-        "Yüksek temperature, token seçimindeki rastlantısallığı artırır. Bu, yaratıcılığı artırabilir ancak tutarlılığı azaltabilir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Metin gömmesi nedir?",
-        ["Metnin anlamını temsil eden sayısal vektör", "Metnin şifrelenmiş yedeği", "Modelin sistem istemi", "Bir ses dosyasının altyazısı"],
-        0,
-        "Benzer anlamdaki metinler uzayda birbirine yakın olur.",
-        "Gömme, metin veya başka bir içeriğin anlamsal özelliklerini çok boyutlu sayısal vektörle temsil eder.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Vektör araması neden anahtar kelime aramasından farklıdır?",
-        ["Anlamsal benzerliğe göre ilgili içerik bulabilir", "Yalnızca tam eşleşme kabul eder", "Veriyi otomatik olarak etiketler", "Modeli yeniden eğitir"],
-        0,
-        "Aynı fikrin farklı kelimelerle anlatılabildiğini düşün.",
-        "Vektör araması, içeriklerin gömmeleri arasındaki yakınlığı kullanarak kelimeler birebir eşleşmese de anlamsal olarak ilgili sonuçlar bulur.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Diffusion modeli en sık hangi tür üretken görevle ilişkilidir?",
-        ["Görüntü üretimi", "Tablo birleştirme", "IAM yetkilendirmesi", "DNS çözümleme"],
-        0,
-        "Gürültüden aşamalı olarak görsel oluşturmayı düşün.",
-        "Diffusion modelleri özellikle metinden görüntü üretiminde yaygın olarak kullanılır.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Çok modlu bir modelin temel özelliği nedir?",
-        ["Metin ve görüntü gibi birden fazla veri türünü işleyebilmesi", "Yalnızca tek dilde çalışması", "Birden fazla AWS hesabına sahip olması", "Sadece yapılandırılmış veri üretmesi"],
-        0,
-        "Buradaki mod, veri biçimini ifade eder.",
-        "Çok modlu modeller metin, görüntü, ses veya video gibi birden fazla veri biçimini anlayabilir ya da üretebilir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Ön eğitim aşamasının temel amacı nedir?",
-        ["Büyük veri kümesinden genel örüntüler öğrenmek", "Tek bir kullanıcıya parola vermek", "Model günlüklerini arşivlemek", "Her üretimi insan onayına göndermek"],
-        0,
-        "Bu aşama özel bir iş görevinden önce gelir.",
-        "Ön eğitim, modelin geniş bir veri kümesinden genel dil veya içerik örüntülerini öğrenmesini sağlar.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Üretken modelde çıkarım ne zaman gerçekleşir?",
-        ["Eğitilmiş model bir isteme yanıt üretirken", "Ham veri etiketlenirken", "Model ağırlıkları ilk kez öğrenilirken", "Sunucu kapatılırken"],
-        0,
-        "Kullanıcı istemine verilen yanıt anını düşün.",
-        "Çıkarım, eğitilmiş modelin yeni bir girdi için çıktı oluşturduğu çalışma aşamasıdır.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "İstem mühendisliğinin amacı nedir?",
-        ["İstenen çıktıyı almak için girdiyi etkili biçimde tasarlamak", "Model donanımını fiziksel olarak değiştirmek", "Veri tabanını otomatik şifrelemek", "Her zaman yeni model eğitmek"],
-        0,
-        "Talimat, bağlam ve çıktı biçimini düşün.",
-        "İstem mühendisliği, model davranışını yönlendirmek için açık talimatlar, bağlam, örnekler ve çıktı biçimi kullanır.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Aynı girdiye daha tutarlı yanıtlar almak için temperature ayarı nasıl değiştirilmelidir?",
-        ["Düşürülmelidir", "Yükseltilmelidir", "Her istekte rastgele seçilmelidir", "Bağlam uzunluğuna eşitlenmelidir"],
-        0,
-        "Daha az rastlantısallık hedefleniyor.",
-        "Daha düşük temperature, olasılığı yüksek tokenlara odaklanarak daha tutarlı ve öngörülebilir çıktılar üretir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Bir LLM için hangisi önemli bir sınırlamadır?",
-        ["Yanıtların olgusal doğruluğunu kendiliğinden garanti etmemesi", "Hiç metin üretememesi", "Yalnızca tek kelimelik girdi alması", "Her görev için fiziksel robot gerektirmesi"],
-        0,
-        "Akıcı olmak ile doğru olmak aynı şey değildir.",
-        "LLM çıktıları olgusal hata veya uydurma bilgi içerebilir. Kritik içerikler doğrulama ve gerektiğinde insan denetimi gerektirir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "RAG yaklaşımının temel amacı nedir?",
-        ["Yanıtı dış kaynaklardan getirilen ilgili bilgilerle temellendirmek", "Modeli her soruda baştan eğitmek", "Tüm yanıtları rastgeleleştirmek", "Veriyi yalnızca görsele çevirmek"],
-        0,
-        "Açılımındaki retrieval sözcüğünü düşün.",
-        "Retrieval Augmented Generation, ilgili kaynakları getirip isteme ekleyerek yanıtın güncel veya kuruma özgü bilgilerle temellenmesini sağlar.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "İnce ayar hangi durumda RAG yaklaşımından daha uygun olabilir?",
-        ["Modelin üslup ve görev davranışını kalıcı biçimde uyarlamak gerektiğinde", "Bilginin her saat değiştiği durumda", "Kaynak göstermek tek hedef olduğunda", "Hiç eğitim örneği bulunmadığında"],
-        0,
-        "Bilgi getirmek ile davranış öğretmek arasındaki farkı düşün.",
-        "İnce ayar, örnekler üzerinden modelin davranışını veya üslubunu uyarlamak için uygundur. Güncel bilgiye erişim için çoğunlukla RAG daha uygundur.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Uzun müşteri görüşmelerini kısa maddeler halinde sunmak hangi üretken AI görevidir?",
-        ["Özetleme", "Kümeleme", "Anomali tespiti", "Nesne algılama"],
-        0,
-        "Amaç temel bilgiyi daha kısa biçimde korumaktır.",
-        "Özetleme, uzun bir içeriğin ana noktalarını daha kısa bir çıktı halinde üretir.",
-        "Üretken AI temelleri"
-      ),
-      q(
-        "Bir üretken AI kullanım senaryosunun değerini değerlendirirken ilk bakılması gereken nedir?",
-        ["Çözdüğü iş problemi ve ölçülebilir sonucu", "Yalnızca model parametre sayısı", "Model adının popülerliği", "En yüksek temperature değeri"],
-        0,
-        "Teknoloji seçimi iş sonucuna hizmet etmelidir.",
-        "Başarılı AI girişimleri açık bir iş problemi, ölçülebilir hedef ve uygun risk değerlendirmesiyle başlar.",
-        "Üretken AI temelleri"
-      ),
+      q("What is it called when a model receives only task instructions and no examples?", "Zero shot prompting", ["Few shot prompting", "Fine tuning", "Clustering"], "The model relies on its existing knowledge and the instruction alone.", "Zero shot prompting asks a model to perform a task without including demonstrations.", "Prompt engineering"),
+      q("What technique provides several input and correct output examples inside the prompt?", "Few shot prompting", ["Zero shot prompting", "Data encryption", "Model distillation"], "The examples demonstrate the expected pattern.", "Few shot prompting uses a small number of examples to guide the model toward the desired behavior.", "Prompt engineering"),
+      q("What is the primary role of a system prompt?", "Defining the model's overall role, behavior, and constraints", ["Storing the user's password", "Restarting the model server", "Deleting the vector index"], "It contains instructions that apply across the interaction.", "A system prompt establishes high level rules, persona, tone, and response boundaries.", "Prompt engineering"),
+      q("Why place source text inside XML tags or clear delimiters?", "To separate instructions from the data being processed", ["To train the model automatically", "To increase the context window", "To encrypt the data with AWS KMS"], "Clear boundaries reduce ambiguity between prompt sections.", "Delimiters help the model distinguish instructions, examples, and untrusted source content.", "Prompt engineering"),
+      q("What should a prompt include when an application must parse the response automatically?", "An explicit output schema and a valid example", ["Only a request to be more creative", "The highest possible temperature", "The model provider's history"], "Specify exactly what the consuming application expects.", "A clear JSON schema or structured format makes model output easier to validate and process.", "Prompt engineering"),
+      q("What is a benefit of variables in prompt templates?", "The same instruction structure can be reused with different input values", ["They modify model weights", "They grant administrator access", "They remove the context limit"], "Separate fixed instructions from changing values.", "Template variables support consistent prompts while injecting dynamic values such as a document or customer name.", "Prompt engineering"),
+      q("Which instruction best reduces unsupported answers when a model must use one supplied document?", "Tell the model to say it does not know when the document lacks the answer", ["Set temperature to its maximum", "Remove the source document", "Require the model to invent an answer"], "Define a safe fallback when evidence is missing.", "An explicit abstention instruction reduces unsupported claims, though testing and validation are still required.", "Prompt engineering"),
+      q("What does the top p setting control?", "The cumulative probability mass considered during token sampling", ["The model's IAM role", "The S3 storage class", "The license of the training data"], "This is also called nucleus sampling.", "Top p limits sampling to a set of likely tokens whose cumulative probability reaches the chosen threshold.", "Inference controls"),
+      q("What does the maximum tokens setting directly limit?", "The length of the generated response", ["The amount of pretraining data", "The number of users in an AWS account", "The embedding dimension in every model"], "It limits when output generation must stop.", "Maximum tokens places an upper bound on how many tokens the model can generate.", "Inference controls"),
+      q("Which setting change may help generate a wider variety of creative slogans?", "Increase temperature moderately", ["Remove all sampling diversity", "Delete all context", "Expand IAM permissions"], "Controlled randomness can be useful for creative tasks.", "A higher temperature can increase variety, but the value should be tested for quality and safety.", "Inference controls"),
+      q("What is prompt injection?", "Malicious input that attempts to override trusted instructions", ["A hardware technique for faster inference", "A method for balancing a dataset", "An evaluation metric"], "The input tries to make the model ignore its governing rules.", "Prompt injection attempts to redirect model behavior, reveal protected data, or misuse connected tools.", "Prompt security"),
+      q("Which strategy best reduces prompt injection risk?", "Treat input as untrusted, restrict permissions, and validate output", ["Give the model unrestricted tool access", "Let users edit the system prompt", "Disable every audit log"], "Use multiple defensive layers around the model.", "Input handling, instruction boundaries, least privilege, guardrails, and output validation should work together.", "Prompt security"),
+      q("Why is RAG usually preferred over fine tuning for rapidly changing inventory data?", "The knowledge source can be updated without changing model weights", ["RAG requires no source data", "Fine tuning works only for images", "RAG guarantees every answer"], "Consider how frequently the facts change.", "RAG retrieves current information, while repeated fine tuning for every inventory change would be slow and costly.", "Model adaptation"),
+      q("What data is required for supervised fine tuning?", "High quality input and desired output pairs", ["Only random unlabeled records", "Only IAM logs", "No examples at all"], "The data must demonstrate the target behavior.", "Supervised fine tuning learns from labeled examples that pair an input with the expected response.", "Model adaptation"),
+      q("What is a potential risk of fine tuning?", "Bias or overfitting caused by poor quality adaptation data", ["The model must stop producing output", "S3 data is automatically deleted", "IAM policies are disabled"], "The quality and balance of the examples matter.", "Small, biased, or incorrect fine tuning datasets can harm generalization and amplify undesirable behavior.", "Model adaptation"),
+      q("What does RLHF stand for?", "Reinforcement learning from human feedback", ["Rapid language file replication", "Random log history filtering", "Relational load handling framework"], "Human preferences provide a learning signal.", "RLHF uses human preference data to align model behavior through reinforcement learning methods.", "Model adaptation"),
+      q("What does ROUGE generally measure for a summarization task?", "Text overlap between a generated summary and a reference summary", ["Server CPU utilization", "The number of IAM permissions", "S3 object size"], "Compare word sequences with a reference answer.", "ROUGE measures forms of n gram overlap and recall against reference summaries.", "Model evaluation"),
+      q("BLEU is most commonly associated with which task?", "Machine translation", ["Image segmentation", "Anomaly clustering", "Access control"], "It compares a generated translation with reference translations.", "BLEU is an automatic metric based on overlap between candidate and reference translations.", "Model evaluation"),
+      q("When is human evaluation especially valuable?", "When judging tone, helpfulness, nuance, and preference", ["When measuring only CPU temperature", "When counting S3 objects", "When creating an IAM role"], "Not every quality dimension is captured by lexical overlap.", "Human reviewers can assess subjective and nuanced qualities that automated metrics may miss.", "Model evaluation"),
+      q("What is the most reliable way to determine whether a prompt revision is an improvement?", "Compare both versions on the same representative evaluation dataset", ["Inspect one successful response", "Only make the prompt longer", "Publish without measuring"], "Use a controlled and repeatable comparison.", "A versioned evaluation set and consistent metrics reveal whether a prompt change improves target behavior.", "Model evaluation"),
+    ],
+  },
+  {
+    id: 6,
+    title: "RAG, agents, and evaluation",
+    description: "Retrieval pipelines, agent design, quality measurement, observability, and cost tradeoffs.",
+    domain: "FOUNDATION MODEL APPLICATIONS",
+    questions: [
+      q("Why are documents split into chunks in a RAG system?", "So relevant sections can be retrieved and placed in the prompt", ["To hide documents automatically", "To create additional IAM roles", "To retrain the model on each section"], "Long documents are easier to retrieve in smaller meaningful units.", "Chunking divides content into searchable units that fit retrieval and model context constraints.", "RAG"),
+      q("What does an embedding model do during RAG ingestion?", "Converts text chunks into semantic vectors", ["Assigns IAM roles to users", "Converts every document to speech", "Turns model output into encryption keys"], "Vector search needs a numeric representation.", "Embeddings represent document chunks and queries as vectors for similarity comparison.", "RAG"),
+      q("Which sequence correctly describes a typical RAG request?", "Embed the query, retrieve relevant chunks, add context, generate an answer", ["Generate an answer, train a model, delete data, embed the query", "Delete the document, raise temperature, generate an answer", "Create a user, build a network, download a model"], "Information is found before the response is generated.", "RAG retrieves relevant evidence and supplies it to a model as context for generation.", "RAG"),
+      q("Why are source citations useful in a RAG response?", "They help users verify the supporting documents", ["They guarantee that every answer is correct", "They eliminate the need for a model", "They replace all access controls"], "Think about transparency and verification.", "Citations let users inspect the evidence behind a response, although citations alone do not guarantee accuracy.", "RAG"),
+      q("What should happen after source documents in a RAG knowledge base are updated?", "Changed content should be processed and the index synchronized", ["The foundation model must always be retrained", "Every IAM user must be deleted", "Temperature must be reset"], "The search index must reflect the source system.", "Reprocessing changed documents keeps embeddings and retrieved content current.", "RAG"),
+      q("What is a possible disadvantage of chunks that are too small?", "Important surrounding context can be separated", ["Vector search becomes impossible", "IAM policies stop working", "Documents are automatically deleted"], "A sentence may depend on its neighboring text.", "Very small chunks can lose context, while overly large chunks can add irrelevant content.", "RAG"),
+      q("What does hybrid search combine?", "Keyword search and semantic vector search", ["Speech and image generation", "Training and billing", "IAM and DNS management"], "Combine exact term matching with meaning based matching.", "Hybrid search joins lexical precision with semantic similarity to improve retrieval coverage.", "RAG"),
+      q("How does an AI agent differ from a standalone foundation model?", "An agent can plan and use tools to take actions", ["An agent never uses a language model", "An agent can output only one word", "An agent must always be human"], "The agent interacts with systems beyond generating text.", "Agents combine model reasoning with tools, APIs, memory, and orchestration.", "Agents"),
+      q("What is the safest approach when granting tools to an AI agent?", "Grant only the actions and resources required for its task", ["Grant administrator access to the entire account", "Remove authentication", "Make all API calls anonymous"], "Limit the impact of errors or misuse.", "Least privilege restricts an agent to the smallest set of capabilities needed for its function.", "Agents"),
+      q("Which control is important before an agent performs a high impact money transfer?", "Require human approval", ["Increase temperature", "Disable audit logs", "Allow unlimited retries"], "Keep a person in the loop for consequential actions.", "Human confirmation creates a safety checkpoint for high risk or difficult to reverse actions.", "Agents"),
+      q("What allows an agent to use information from earlier messages in a conversation?", "Session context or memory", ["Data warehouse compression", "Model distillation", "DNS routing"], "The agent needs to remember previous interaction steps.", "Session context or memory helps an agent maintain continuity across messages and actions.", "Agents"),
+      q("How can a team prevent an agent from calling the same tool indefinitely?", "Set limits for steps, timeouts, and retries", ["Grant broader administrator permissions", "Remove all timeouts", "Store every response forever"], "Use execution boundaries to control resource use.", "Maximum steps, timeouts, and retry limits help prevent uncontrolled loops.", "Agents"),
+      q("What does exact match measure in a question answering evaluation?", "Whether the generated answer exactly matches the reference answer", ["Whether a human finds the meaning similar", "The server latency", "The strength of encryption"], "This metric is strict about surface form.", "Exact match is simple and objective but can reject semantically correct answers phrased differently.", "Model evaluation"),
+      q("Why is model quality alone insufficient for evaluating a generative AI application?", "Latency, cost, security, and user experience also affect success", ["Quality never matters", "Cost is always zero", "Latency exists only during training"], "Production systems have several business requirements.", "A useful application balances output quality with operational, financial, security, and experience goals.", "Model evaluation"),
+      q("How does offline evaluation differ from online evaluation?", "Offline evaluation uses fixed datasets; online evaluation uses live usage signals", ["They are always identical", "Online evaluation only measures internet speed", "Offline evaluation uses no data"], "Compare laboratory testing with real user behavior.", "Offline tests support controlled comparisons, while online tests measure real world outcomes and behavior.", "Model evaluation"),
+      q("What does an A B test provide?", "A comparison of two versions across similar user groups", ["Automatic model encryption", "One forced version for all users", "Automatic labeling of training data"], "Measure how two variants affect real behavior.", "A B testing splits traffic to compare versions on defined outcome metrics.", "Model evaluation"),
+      q("Which action can reduce inference latency?", "Evaluate a smaller model that still meets the quality target", ["Add long irrelevant documents to every prompt", "Allow unlimited output", "Start fine tuning for every response"], "The largest model is not always necessary.", "A smaller suitable model, focused context, and controlled output length can reduce latency and cost.", "Performance and cost"),
+      q("Which approach can reduce token cost?", "Remove irrelevant context and keep prompts and outputs concise", ["Repeat the same document several times", "Always request the longest response", "Include unlimited conversation history"], "Reduce unnecessary input and output tokens.", "Focused context and sensible output limits reduce token processing while preserving useful quality.", "Performance and cost"),
+      q("If a RAG system retrieves poor evidence, which components should be inspected first?", "Chunking, embeddings, filters, and search configuration", ["Only the interface color", "The IAM username length", "The billing address"], "Investigate the stage before generation.", "Retrieval quality depends on content segmentation, embedding choice, metadata filters, and search strategy.", "RAG"),
+      q("How should production user feedback be used?", "Review it to identify failure patterns and expand evaluation datasets", ["Add every comment directly to training data", "Delete audit logs", "Remove access controls"], "Create a controlled improvement loop.", "Reviewed feedback can reveal error categories and produce new test cases for safe, measurable improvements.", "Model evaluation"),
+    ],
+  },
+  {
+    id: 7,
+    title: "Responsible AI",
+    description: "Fairness, transparency, explainability, robustness, privacy, and human oversight.",
+    domain: "RESPONSIBLE AI",
+    questions: [
+      q("What does fairness aim to achieve in a responsible AI system?", "Identify and reduce unjust outcomes across relevant groups", ["Show identical text to every user", "Run the model only on the fastest server", "Keep every decision secret"], "Consider how system outcomes affect different groups.", "Fairness focuses on measuring and mitigating discriminatory or inequitable AI outcomes.", "Responsible AI"),
+      q("What risk increases when a group is underrepresented in training data?", "Poor performance and bias for that group", ["Automatically equal accuracy for every group", "Lower storage latency", "Stronger encryption"], "A model learns from the examples it sees.", "Underrepresentation can prevent a model from learning patterns that work well for that population.", "Responsible AI"),
+      q("Which practice supports transparency?", "Tell users when they are interacting with AI and explain its limitations", ["Hide all AI use", "Delete evaluation results", "Share explanations only with developers"], "Users should understand the nature of the system.", "Transparency communicates AI use, capabilities, limitations, and relevant data practices to stakeholders.", "Responsible AI"),
+      q("What does explainability provide?", "Understandable information about factors influencing model output", ["A guarantee that every prediction is correct", "Zero storage cost", "A replacement for human oversight"], "Ask why the system produced a particular result.", "Explainability helps stakeholders understand the factors that contributed to an AI output.", "Responsible AI"),
+      q("Why is human oversight important for a high impact credit decision?", "It allows disputed or unusual results to be reviewed and corrected", ["It causes the model to generate more tokens", "It increases S3 cost", "It automatically rejects every application"], "Consider the impact on a person and the need to appeal.", "Human review supports exceptions, accountability, correction, and a path for affected people to contest decisions.", "Responsible AI"),
+      q("What does robustness mean for an AI system?", "The system behaves reliably under changing or unexpected inputs", ["It always produces the longest answer", "Every user shares one password", "All data is retained forever"], "Think about resilience in real world conditions.", "A robust system maintains acceptable and safe behavior under noisy, shifted, edge case, or adversarial input.", "Responsible AI"),
+      q("How should a company assess the fairness of a hiring model?", "Measure performance and error rates separately for relevant demographic groups", ["Inspect only overall accuracy", "Measure only training time", "Change the model name"], "An aggregate average can hide group differences.", "Disaggregated evaluation exposes performance disparities that can be hidden by a strong overall metric.", "Responsible AI"),
+      q("What is the purpose of a model card?", "Document intended use, performance, limitations, and risks", ["Collect credit card payments", "Train the model automatically", "Route network traffic"], "Think of a standardized information document about a model.", "Model cards improve transparency by recording a model's purpose, evaluation, constraints, and responsible use considerations.", "Responsible AI"),
+      q("What does a data card or datasheet help document?", "The source, composition, processing, and limitations of a dataset", ["Only the model price", "An IAM user password", "A physical server diagram"], "Focus on the history and characteristics of the data.", "Dataset documentation provides traceability about collection, representation, transformations, and known risks.", "Responsible AI"),
+      q("Which control helps reduce toxic output from a generative AI application?", "Content filters and safety policies", ["Broader administrator access", "Longer data retention", "Unlimited temperature"], "Apply policy checks to model input and output.", "Content filters and guardrails can reduce harmful output and should be combined with testing and monitoring.", "Responsible AI"),
+      q("What does data minimization mean?", "Collect and process only the data required for a defined purpose", ["Retain every possible data point forever", "Publish all data", "Only reduce the model size"], "Less unnecessary personal data means less privacy risk.", "Data minimization limits processing to information that is relevant and necessary for a legitimate purpose.", "Responsible AI"),
+      q("Providing an appeal process for an automated decision supports which principle?", "Accountability and human oversight", ["Only performance optimization", "Data compression", "Model scaling"], "Affected people should be able to challenge a decision.", "Appeal and correction mechanisms make consequential automated decisions reviewable by people.", "Responsible AI"),
+      q("What does accountability require in AI governance?", "Clear owners for decisions, controls, and corrective actions", ["Hiding the system owner", "Leaving all controls to the model", "Disabling audit logs"], "Someone must be responsible when a problem occurs.", "Accountability assigns responsibility for system outcomes, risk controls, monitoring, and remediation.", "Responsible AI"),
+      q("Why is evaluating a model only before deployment insufficient?", "Data and user behavior can change over time", ["A deployed model becomes permanently perfect", "Production metrics cannot be collected", "Accuracy can never be measured"], "Real world distributions can shift.", "Ongoing monitoring is necessary because drift and changing conditions can affect quality, safety, and fairness.", "Responsible AI"),
+      q("Which practice represents inclusive design?", "Include diverse user groups in requirements and testing", ["Test only the largest user group", "Consider accessibility after launch", "Assume all users have identical needs"], "Engage affected groups early.", "Inclusive design incorporates varied experiences and needs to reduce exclusion and unintended harm.", "Responsible AI"),
+      q("What is an appropriate action when a high impact model has low confidence?", "Escalate to human review or safely abstain", ["Present the result as certain", "Hide the confidence level", "Take a random action"], "Use a safe fallback for uncertainty.", "Human review or abstention can reduce the risk of acting on unreliable predictions.", "Responsible AI"),
+      q("How does content provenance support responsible AI?", "It provides transparency about where content came from and how it was created", ["It guarantees the content is factual", "It removes storage costs", "It replaces IAM roles"], "Users may need to know whether content was AI generated.", "Provenance metadata, labeling, and appropriate watermarking can help users assess content origin.", "Responsible AI"),
+      q("How can a company make responsible AI principles measurable?", "Define metrics, thresholds, owners, and review frequency for specific risks", ["Publish only a general statement of intent", "Delegate every decision to the model provider", "Delete evaluation data"], "Turn principles into observable controls.", "Defined measures such as harmful output rate or group error gaps allow teams to track responsible AI outcomes.", "Responsible AI"),
+      q("Including energy consumption in an AI assessment addresses which consideration?", "Sustainability", ["Only accuracy", "Authentication", "Translation quality"], "Consider the environmental impact of AI workloads.", "Model size, training, and inference energy use are part of sustainable AI planning.", "Responsible AI"),
+      q("Which lifecycle approach best supports responsible AI?", "Manage risks continuously from design through retirement", ["Review the system only on launch day", "Rely only on provider evaluations", "Wait for users to report every issue"], "Risk management is not a one time activity.", "Responsible AI should be integrated into use case selection, data, development, testing, deployment, monitoring, and retirement.", "Responsible AI"),
+    ],
+  },
+  {
+    id: 8,
+    title: "Security and governance",
+    description: "IAM, encryption, logging, data protection, compliance, and generative AI threats.",
+    domain: "SECURITY AND GOVERNANCE",
+    questions: [
+      q("Under the AWS shared responsibility model, what is the customer responsible for?", "Protecting its data, identities, permissions, and service configurations", ["Physical security of AWS data centers", "Manufacturing AWS hardware", "Operating the global AWS network"], "Separate security of the cloud from security in the cloud.", "AWS secures the underlying cloud infrastructure, while customers secure their content and configurations according to the services they use.", "Security"),
+      q("What does the principle of least privilege require?", "Grant only the permissions needed to perform a task", ["Give every user administrator access", "Remove authentication", "Make every resource public"], "Reduce unnecessary permissions.", "Least privilege limits identities and services to required actions on required resources.", "Security"),
+      q("What is AWS KMS used for?", "Creating and managing encryption keys", ["Converting text to speech", "Fine tuning models", "Extracting tables from documents"], "KMS stands for Key Management Service.", "AWS KMS manages cryptographic keys and controls their use for data protection.", "Security"),
+      q("Which controls should protect training data stored in Amazon S3?", "Encryption at rest and restrictive access policies", ["Public write access", "Anonymous user access", "Publishing every object version"], "Protect both the data and who can access it.", "Encryption and carefully scoped S3 and IAM policies reduce unauthorized access to stored data.", "Security"),
+      q("Which technology protects data in transit?", "TLS", ["Plain HTTP", "A public S3 bucket", "An anonymous IAM role"], "Encrypt the connection between clients and services.", "TLS encrypts data moving across a network and helps protect its confidentiality and integrity.", "Security"),
+      q("Which service records who made an AWS API call and when?", "AWS CloudTrail", ["Amazon Polly", "Amazon Personalize", "AWS Glue DataBrew"], "Choose the AWS API activity history service.", "AWS CloudTrail records user and service API activity for investigation and auditing.", "Security"),
+      q("What can Amazon CloudWatch monitor for an AI application?", "Metrics, logs, events, and alarms", ["Only employee vacation dates", "A provider's private training data", "Physical data center visitors"], "Think about operational observability.", "CloudWatch supports monitoring of latency, errors, utilization, logs, and operational events.", "Security"),
+      q("Which data belongs in AWS Secrets Manager?", "API keys and database credentials", ["Public product descriptions", "Model evaluation charts", "Anonymous usage statistics"], "These values should not be hard coded in an application.", "Secrets Manager securely stores, retrieves, and can rotate passwords, API keys, and other secrets.", "Security"),
+      q("How can Amazon Macie support an AI data lake?", "Discover and report sensitive data in Amazon S3", ["Train foundation models", "Generate spoken responses", "Reduce model latency"], "Focus on S3 data security.", "Macie identifies sensitive data patterns such as personal or credential information in S3.", "Security"),
+      q("Why mask personal information before sending a prompt to an LLM?", "To support data minimization and privacy", ["To increase model size", "To increase network latency", "To enable public access"], "Send only information required for the task.", "Masking or redaction reduces unnecessary processing and exposure of personal data.", "Data protection"),
+      q("What is a benefit of using a VPC endpoint for a supported AWS service?", "Traffic can reach the service without traversing the public internet", ["All IAM controls are removed", "The model is trained automatically", "All data becomes public"], "Think about private network connectivity.", "VPC endpoints provide private connectivity from a VPC to supported AWS services.", "Security"),
+      q("What is data poisoning?", "Maliciously modifying training data to influence model behavior", ["Clustering unlabeled records", "Summarizing text", "Splitting text into tokens"], "An attacker inserts harmful or misleading training examples.", "Data poisoning attempts to degrade a model or introduce targeted unwanted behavior through corrupted training data.", "AI threats"),
+      q("Which practice reduces model supply chain risk?", "Verify source, license, version, integrity, and evaluation evidence", ["Deploy any unknown model immediately", "Ignore license information", "Skip security evaluation"], "Establish provenance for models and data.", "Supply chain controls help teams understand and trust the origin and integrity of AI components.", "AI threats"),
+      q("What does AWS Artifact provide?", "Access to AWS compliance reports and selected agreements", ["Real time text translation", "Model fine tuning", "Vector search"], "Auditors often request documents available through this service.", "AWS Artifact is a portal for AWS security and compliance reports and certain online agreements.", "Compliance"),
+      q("What can AWS Config do?", "Record resource configurations and evaluate them against rules", ["Summarize text", "Generate images", "Transcribe audio"], "Think about configuration history and compliance.", "AWS Config tracks supported resource configurations and can assess them against desired rules.", "Governance"),
+      q("What should be verified first for an AI workload with strict data residency requirements?", "The AWS Region where data will be stored and processed", ["Only the interface color", "The maximum temperature", "Whether every user has the same role"], "The requirement concerns geographic location.", "Region selection must consider service availability and legal requirements for data storage and processing location.", "Compliance"),
+      q("What should a data retention policy define?", "How long data is kept and how it is securely deleted", ["The model's brand color", "The longest possible response", "The employee device model"], "Consider the full data lifecycle.", "Retention policies align storage, archival, and secure deletion with business and regulatory requirements.", "Governance"),
+      q("Why should an organization classify AI use cases by risk?", "To apply controls based on impact and sensitivity", ["To give every use case the same minimal controls", "To reject every AI project", "To hide project costs"], "A low impact summary and a credit decision do not require identical controls.", "Risk classification determines appropriate approval, testing, oversight, and documentation requirements.", "Governance"),
+      q("Why are Bedrock Guardrails not a complete security solution by themselves?", "Identity, network, data protection, monitoring, and application controls are still required", ["They provide no content filtering", "They only back up databases", "They fully replace IAM"], "Use defense in depth.", "Guardrails manage selected content risks but do not replace least privilege, encryption, validation, and monitoring.", "Security"),
+      q("How can sensitive data risk in AI application logs be reduced?", "Redact sensitive fields and enforce strict access, encryption, and retention", ["Make logs public", "Keep every prompt forever", "Disable encryption"], "Balance observability with privacy.", "Redaction, access control, encryption, and limited retention reduce the chance that logs expose sensitive information.", "Security"),
+    ],
+  },
+  {
+    id: 9,
+    title: "Scenario lab",
+    description: "Match business requirements with suitable AI approaches and AWS services.",
+    domain: "APPLICATION SCENARIOS",
+    questions: [
+      q("An insurer needs to extract fields and tables from scanned claim forms. Which service is the best fit?", "Amazon Textract", ["Amazon Polly", "Amazon Personalize", "Amazon Translate"], "The input consists of structured and semi structured documents.", "Amazon Textract extracts text, handwriting, form key values, and tables from documents.", "Service selection"),
+      q("A global support team needs to translate customer messages into an agent's preferred language. Which service should it use?", "Amazon Translate", ["Amazon Rekognition", "Amazon Macie", "Amazon Redshift"], "The task converts text between natural languages.", "Amazon Translate provides managed machine translation for supported languages.", "Service selection"),
+      q("A bank wants to know whether its credit model performs similarly for different demographic groups. What should it do?", "Measure performance and error rates separately for each relevant group", ["Review only overall accuracy", "Change the model name", "Write a longer prompt"], "Aggregate results can hide a problem affecting one group.", "Disaggregated metrics reveal differences in accuracy, false positives, and false negatives among groups.", "Responsible AI"),
+      q("A company needs an assistant that answers from employee handbooks updated each month and cites its sources. Which approach is best?", "Use Knowledge Bases for Amazon Bedrock with RAG", ["Retrain a foundation model from scratch every month", "Use only a high temperature", "Convert the handbook to speech with Amazon Polly"], "Current private knowledge and citations are both required.", "RAG retrieves current handbook sections and provides evidence that can be cited in the response.", "RAG"),
+      q("A contact center wants to transcribe calls and then detect customer sentiment. Which sequence is correct?", "Amazon Transcribe followed by Amazon Comprehend", ["Amazon Polly followed by Amazon Rekognition", "Amazon Textract followed by Amazon Translate", "Amazon Personalize followed by AWS Artifact"], "First convert speech to text, then analyze the text.", "Transcribe produces the transcript and Comprehend performs sentiment analysis on it.", "Service selection"),
+      q("An online store wants product recommendations based on each customer's clicks and purchases. Which service should it use?", "Amazon Personalize", ["Amazon Textract", "Amazon Polly", "AWS CloudTrail"], "The requirement is individualized ranking and recommendations.", "Amazon Personalize uses interaction data to generate personalized product or content recommendations.", "Service selection"),
+      q("A legal assistant must answer only from approved contracts and abstain when evidence is missing. Which design is best?", "RAG with source filters and an explicit abstention instruction", ["Unrestricted creative generation", "Only a larger model", "Removing source documents from the prompt"], "Restrict the evidence and define a safe fallback.", "Approved source retrieval, metadata filtering, and abstention behavior reduce unsupported legal claims.", "RAG"),
+      q("A marketing team wants many creative slogan variations. Which inference setting could be increased moderately?", "Temperature", ["The number of IAM permissions", "The S3 retention period", "The KMS key size"], "This setting controls sampling variety.", "Increasing temperature can produce more diverse options, which should still be reviewed against brand and safety rules.", "Inference controls"),
+      q("A finance application uses an agent that can issue refunds. Which additional control is most important?", "Human approval and transaction limits before the refund", ["Administrator access across the account", "Unlimited retries", "Disabled audit logs"], "The action has financial impact and may be difficult to reverse.", "Approval, amount limits, and least privilege reduce risk from consequential agent actions.", "Agent security"),
+      q("A hospital wants to summarize clinical notes. What should it do before sending unnecessary personal details to the model?", "Mask or redact the unnecessary personal information", ["Store the notes in a public S3 bucket", "Retain every note forever", "Grant the model administrator access"], "Send only what the task requires.", "Data minimization and redaction reduce exposure of sensitive health information.", "Data protection"),
+      q("A factory wants to identify defective products in camera images. Which managed service is a suitable starting point?", "Amazon Rekognition", ["Amazon Translate", "Amazon Comprehend", "AWS Artifact"], "The input is visual and the task is image analysis.", "Amazon Rekognition provides managed image analysis; highly specialized defects may still require a custom model.", "Service selection"),
+      q("How should a team compare foundation models for its application?", "Measure quality, latency, cost, and safety on representative tasks", ["Compare only parameter counts", "Always choose the newest model", "Choose a model at random"], "Use real requirements across several dimensions.", "Representative evaluation identifies the model that best balances the organization's actual needs.", "Model evaluation"),
+      q("A summarization application costs more than expected. Which optimization should be tested first?", "Remove unnecessary prompt context and reduce output length", ["Repeat the same document several times", "Create more administrator roles", "Always generate the maximum response"], "Cost often follows input and output token volume.", "Focused context and sensible output limits can reduce token cost while maintaining quality.", "Cost"),
+      q("A customer chatbot frequently invents company policies. Which improvement is most effective?", "Use RAG with approved policy documents and source validation", ["Raise temperature to the maximum", "Remove all safety controls", "Request longer responses"], "Ground the response in verified company knowledge.", "RAG and validation connect responses to approved evidence and reduce hallucination risk.", "RAG"),
+      q("A data science team needs to build and manage a custom prediction model end to end. Which service should it use?", "Amazon SageMaker AI", ["Amazon Polly", "Amazon Translate", "AWS Artifact"], "The team needs a custom ML platform rather than a purpose built API.", "SageMaker AI supports preparation, training, evaluation, deployment, and monitoring of custom models.", "Service selection"),
+      q("An auditor requests independent AWS compliance reports. Which service should provide them?", "AWS Artifact", ["Amazon Lex", "Amazon Personalize", "AWS Lambda"], "Choose the portal for AWS compliance documents.", "AWS Artifact provides on demand access to AWS security and compliance reports and selected agreements.", "Compliance"),
+      q("An assistant's response quality declined several months after launch. What is the best next step?", "Check for data or usage drift and reevaluate with recent production examples", ["Delete all logs immediately", "Reduce the number of users", "Make IAM policies public"], "Real world data can change over time.", "Monitoring and updated evaluation data can reveal drift and new failure patterns.", "Lifecycle"),
+      q("A support bot must consistently use a company's tone. What is the lowest effort first step?", "Use a clear system prompt and several high quality examples", ["Pretrain a foundation model from scratch", "Delete all source documents", "Give each user random instructions"], "Try prompt engineering before training.", "Role, tone rules, and few shot examples can create consistent style without changing model weights.", "Prompt engineering"),
+      q("An agent should read order status but must never modify an order. How should its permissions be configured?", "Allow only the required read actions on order resources", ["Allow every write and delete action", "Grant administrator access", "Remove authentication"], "Scope permissions to the exact function.", "Least privilege gives the agent only the read APIs and resources necessary for order lookup.", "Security"),
+      q("How should a product team determine whether an AI feature is successful?", "Track business outcomes together with quality, latency, cost, and risk", ["Judge only by the model name", "Maximize generated token count", "Ignore user feedback"], "Combine technical performance with business value.", "A complete success framework links task outcomes and user value with operational and responsible AI measures.", "Business value"),
+    ],
+  },
+  {
+    id: 10,
+    title: "Full scope mock",
+    description: "A balanced, scenario focused review across all five AIF C01 domains.",
+    domain: "FULL SCOPE REVIEW",
+    questions: [
+      q("Which method groups unlabeled support tickets by topic similarity?", "Clustering", ["Regression", "Supervised classification", "Speech synthesis"], "No predefined topic labels are available.", "Clustering is an unsupervised learning method that discovers groups based on similarity.", "AI and ML fundamentals"),
+      q("Which metric should be improved to reduce the number of fraudulent transactions that a model misses?", "Recall", ["Precision", "Training duration", "Number of clusters"], "The goal is to reduce false negatives.", "Recall measures how many actual positive cases are detected.", "AI and ML fundamentals"),
+      q("What happens when content exceeds an LLM's context window?", "Some content must be removed, summarized, or split", ["The model automatically gains unlimited memory", "IAM roles are deleted", "The model is permanently retrained"], "A model can process only a limited number of tokens at once.", "Content beyond the context capacity cannot be considered in the same interaction without preprocessing.", "Generative AI fundamentals"),
+      q("A team wants a model to use current company documents without changing its weights. Which approach should it use?", "RAG", ["Pretraining from scratch", "Only increasing temperature", "Clustering"], "Retrieve the knowledge at request time.", "RAG adds relevant external knowledge to the prompt without modifying model weights.", "Foundation model applications"),
+      q("Why define denied topics in Amazon Bedrock Guardrails?", "To prevent the application from discussing restricted subject areas", ["To increase the context window", "To encrypt embeddings", "To calculate S3 cost"], "Consider business topics the assistant should refuse.", "Denied topics let an organization configure areas in which the application should not engage.", "Amazon Bedrock"),
+      q("Which service converts written content into natural sounding speech?", "Amazon Polly", ["Amazon Transcribe", "Amazon Textract", "Amazon Comprehend"], "The direction is text to speech.", "Amazon Polly synthesizes spoken audio from text.", "AWS service selection"),
+      q("Why should foundation models be tested on actual use case examples?", "General benchmark results may not reflect organization specific quality", ["To change the model name", "To create an IAM role", "To fill storage capacity"], "The task and data distribution are specific to the organization.", "Representative examples reveal actual accuracy, style, latency, safety, and cost for the intended workload.", "Model evaluation"),
+      q("A model performs well overall but poorly for older users. What does this indicate?", "A potential group fairness or representation issue", ["A need for stronger encryption", "A DNS problem", "An S3 storage class issue"], "The overall average hides a group level difference.", "Lower performance for one group should trigger investigation of representation, data quality, and fairness.", "Responsible AI"),
+      q("Which service should record an audit trail of AWS API activity?", "AWS CloudTrail", ["Amazon Translate", "Amazon Personalize", "Amazon Polly"], "Think about account activity and API history.", "CloudTrail records AWS API activity for security analysis, operations, and compliance.", "Security"),
+      q("A prompt includes several correct classification examples before asking the model to classify a new item. Which technique is this?", "Few shot prompting", ["Zero shot prompting", "Model distillation", "Unsupervised clustering"], "The model sees demonstrations of the desired pattern.", "Few shot prompting includes a small number of examples in the prompt.", "Prompt engineering"),
+      q("A user message instructs a model to ignore the system prompt. Which threat does this represent?", "Prompt injection", ["Overfitting", "A clustering error", "Vector normalization"], "Untrusted input tries to override trusted instructions.", "Prompt injection attempts to redirect model behavior or bypass safeguards.", "AI security"),
+      q("How should an assistant ensure it retrieves only documents a particular employee may access?", "Apply user authorization filters in the retrieval layer", ["Put every document in one public index", "Lower temperature", "Generate a longer answer"], "Enforce document access before content reaches the model.", "Identity and document level authorization should prevent unauthorized content from being retrieved.", "Security"),
+      q("A model has excellent training performance but weak performance on new examples. Which response may help?", "Use more representative data, regularization, or a simpler model", ["Make the model memorize the training set further", "Mix the test set into training", "Remove evaluation"], "The problem is overfitting.", "Representative data and appropriate model complexity can improve generalization.", "AI and ML fundamentals"),
+      q("A Bedrock agent must check inventory and then create an order. Which components does it need?", "Access to inventory information and a defined action group", ["Only a higher temperature", "S3 Glacier and AWS Artifact", "Amazon Polly and Amazon Translate"], "The agent needs both information and permission to perform an API action.", "The agent retrieves inventory data and invokes an authorized order API through an action group.", "Agents"),
+      q("Which Bedrock feature can help prevent personal information from appearing in model input or output?", "Guardrails sensitive information filters", ["Provisioned Throughput", "S3 Transfer Acceleration", "Amazon Route 53"], "Choose the feature that can detect and mask sensitive patterns.", "Bedrock Guardrails can apply configured sensitive information controls to input and output.", "Amazon Bedrock"),
+      q("Which metric compares a generated summary with a reference using word sequence overlap?", "ROUGE", ["Recall for classification", "Silhouette score", "CPU utilization"], "Choose the common summarization metric.", "ROUGE measures forms of overlap between generated and reference summaries.", "Model evaluation"),
+      q("Which AWS storage service does Amazon Macie analyze for sensitive data?", "Amazon S3", ["Amazon Polly", "AWS IAM", "Amazon Lex"], "Choose the AWS object store.", "Macie analyzes S3 buckets and objects to discover sensitive data.", "Security"),
+      q("What is the best starting point for an AI project?", "Define the business problem, success metrics, and risk limits", ["Purchase the largest model first", "Deploy without a measurement plan", "Invent a problem to match a technology"], "Define the outcome before selecting a solution.", "Clear outcomes, data suitability, and risk boundaries should guide technology selection.", "Business value"),
+      q("Why is explainability important for high impact AI decisions?", "Stakeholders can examine and challenge the basis of a decision", ["The model generates more tokens", "Storage costs increase", "Human oversight becomes unnecessary"], "People affected by a decision may need to understand why it occurred.", "Explainability supports scrutiny, error detection, contestability, and accountability.", "Responsible AI"),
+      q("Which inference choice is a good starting point for a low volume Bedrock workload with unpredictable traffic?", "On demand inference", ["Maximum provisioned capacity at all times", "New model training for every call", "Purchasing physical servers"], "Consider pay for use flexibility.", "On demand inference provides flexible usage without an upfront capacity commitment.", "Cost"),
     ],
   },
 ];
